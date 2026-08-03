@@ -1,26 +1,454 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ---------------------------------------------------------------
+   Elvis Rimdap — portfolio design system
+   Direction: editorial index. Warm paper, hairline rules instead of
+   cards, a high-contrast display serif whose italic carries the
+   emphasis, and monospace metadata labels for the systems register.
+   --------------------------------------------------------------- */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+:root {
+  --paper: #f5f2ec;
+  --paper-raised: #fbfaf8;
+  --paper-sunk: #ece8df;
+  --ink: #16181c;
+  --ink-soft: #3c4046;
+  --ink-muted: #6b6f77;
+  --ink-faint: #9a9ea6;
+  --rule: #ddd8ce;
+  --rule-strong: #c8c2b5;
+  --accent: #d8412a;
+  --accent-soft: #f2ddd7;
+  --success: #166534;
+  --success-soft: #dcfce7;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --paper: #101216;
+    --paper-raised: #171a1f;
+    --paper-sunk: #0b0d10;
+    --ink: #eeebe4;
+    --ink-soft: #c9c6c0;
+    --ink-muted: #91959d;
+    --ink-faint: #62666e;
+    --rule: #262a31;
+    --rule-strong: #383d46;
+    --accent: #ff6647;
+    --accent-soft: #37211d;
+    --success: #4ade80;
+    --success-soft: #052e16;
   }
 }
 
+/* An explicit theme choice wins over the OS preference, both ways. */
+:root[data-theme="light"] {
+  --paper: #f5f2ec;
+  --paper-raised: #fbfaf8;
+  --paper-sunk: #ece8df;
+  --ink: #16181c;
+  --ink-soft: #3c4046;
+  --ink-muted: #6b6f77;
+  --ink-faint: #9a9ea6;
+  --rule: #ddd8ce;
+  --rule-strong: #c8c2b5;
+  --accent: #d8412a;
+  --accent-soft: #f2ddd7;
+  --success: #166534;
+  --success-soft: #dcfce7;
+}
+
+:root[data-theme="dark"] {
+  --paper: #101216;
+  --paper-raised: #171a1f;
+  --paper-sunk: #0b0d10;
+  --ink: #eeebe4;
+  --ink-soft: #c9c6c0;
+  --ink-muted: #91959d;
+  --ink-faint: #62666e;
+  --rule: #262a31;
+  --rule-strong: #383d46;
+  --accent: #ff6647;
+  --accent-soft: #37211d;
+  --success: #4ade80;
+  --success-soft: #052e16;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-raised: var(--paper-raised);
+  --color-paper-sunk: var(--paper-sunk);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+
+  --font-display: var(--font-newsreader), Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* clip (not hidden) so full-bleed breakout can't cause sideways scroll,
+     while leaving position: sticky on the header unaffected. */
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+/* Display serif — optical size tuned for large settings. */
+.display {
+  font-family: var(--font-newsreader), Georgia, serif;
+  font-variation-settings: "opsz" 36;
+  letter-spacing: -0.018em;
+  line-height: 1.06;
+}
+
+/* Monospace eyebrow — replaces the old red small-caps sans label. */
+.label {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.label-muted {
+  color: var(--ink-muted);
+}
+
+/* Numerals in stats, indices and metrics align in a column. */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Long-form case study prose. */
+.prose-case > p {
+  color: var(--ink-soft);
+  line-height: 1.75;
+  max-width: 64ch;
+}
+
+.prose-case > p + p {
+  margin-top: 1.15em;
+}
+
+/* True full-bleed: break any centred container to the full viewport width
+   without triggering horizontal scroll. The article clips overflow so the
+   scrollbar can't cause a sliver of sideways scroll. */
+.full-bleed {
+  width: 100vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Scroll-reveal — a single, quiet lift into place. The reduced-motion global
+   rule below already collapses the transition; the component also renders
+   shown immediately when reduced motion is requested. */
+.reveal {
+  opacity: 0;
+  transform: translateY(1.25rem);
+  transition:
+    opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal[data-shown="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* KFC hero composition: settle the whole frame rather than individual imgs. */
+.hero-composition {
+  animation: hero-settle 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.hero-composition img {
+  animation: none;
+}
+
+/* A slow, subtle settle for the full-bleed hero image. Runs once on load,
+   CSS-only — the image is never hidden (LCP-safe, no blank if JS fails).
+   The reduced-motion rule below collapses the duration to near-zero. */
+.hero-media {
+  /* overflow: hidden removed — body clips x-overflow; hidden + scale(1.045)
+     entry animation was clipping the image bottom edge for 1.4 s on load. */
+}
+
+.hero-media img {
+  animation: hero-settle 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes hero-settle {
+  from {
+    transform: scale(1.045);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Underline that grows from the left on hover. */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: background-size 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.link-underline:hover,
+.link-underline:focus-visible {
+  background-size: 100% 1px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hero flowchart animation ------------------------------------------ */
+.fc-node {
+  transform-box: fill-box;
+  transform-origin: center;
+  backface-visibility: hidden;
+}
+
+@keyframes fc-flipY {
+  from { transform: perspective(500px) rotateY(0deg); }
+  to   { transform: perspective(500px) rotateY(360deg); }
+}
+
+.fc-flip {
+  animation: fc-flipY 0.5s cubic-bezier(0.45, 0, 0.55, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Dext Challenge interactive section -------------------------------- */
+
+/* Cards lift subtly on hover — only before answers are revealed. */
+.chal-card {
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease,
+    box-shadow 0.22s ease,
+    transform 0.22s ease;
+}
+
+.chal-card:not([data-revealed="true"]):hover {
+  box-shadow: 0 6px 26px -8px rgba(0, 0, 0, 0.13);
+  transform: translateY(-2px);
+}
+
+@media (prefers-color-scheme: dark) {
+  .chal-card:not([data-revealed="true"]):hover {
+    box-shadow: 0 6px 26px -8px rgba(0, 0, 0, 0.5);
+  }
+}
+:root[data-theme="dark"] .chal-card:not([data-revealed="true"]):hover {
+  box-shadow: 0 6px 26px -8px rgba(0, 0, 0, 0.5);
+}
+
+/* Classification buttons — hover on unselected state. */
+.chal-btn:not([aria-pressed="true"]):hover {
+  border-color: var(--rule-strong);
+  color: var(--ink);
+}
+
+/* Flowchart canvas — dark-mode border colour */
+@media (prefers-color-scheme: dark) {
+  .fc-canvas-wrap { border-color: #2A2F35; }
+}
+:root[data-theme="light"] .fc-canvas-wrap { border-color: var(--rule); }
+:root[data-theme="dark"]  .fc-canvas-wrap { border-color: #2A2F35; }
+
+/* KFC Experience interactive section -------------------------------- */
+
+@keyframes kfc-exp-idle {
+  0%, 100% { transform: rotate(-2deg) translateY(0); }
+  50%       { transform: rotate(2deg) translateY(-3px); }
+}
+
+@keyframes kfc-exp-spin {
+  0%   { transform: rotate(0deg) scale(1); }
+  35%  { transform: rotate(400deg) scale(1.12); }
+  70%  { transform: rotate(680deg) scale(0.96); }
+  100% { transform: rotate(720deg) scale(1); }
+}
+
+@keyframes kfc-exp-pulse {
+  0%   { transform: scale(0.9); opacity: 0.55; }
+  100% { transform: scale(1.25); opacity: 0; }
+}
+
+@keyframes kfc-exp-rise {
+  from { opacity: 0; transform: translateY(18px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes kfc-exp-fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes kfc-exp-slide-right {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes kfc-exp-loop-node {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Choice button hover */
+.kfc-exp-choice-btn {
+  transition: border-color 0.18s ease, color 0.18s ease, background-color 0.18s ease;
+}
+.kfc-exp-choice-btn:hover,
+.kfc-exp-choice-btn:focus-visible {
+  border-color: #e4002b !important;
+  color: #e4002b !important;
+}
+
+/* Reduced motion: collapse all KFC experience animations */
+@media (prefers-reduced-motion: reduce) {
+  [class*="kfc-exp-"] {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Travelex Journey Experience ---------------------------------------- */
+
+/* Active lane pulse — used on the blueprint schematic's horizontal rule */
+@keyframes tx-exp-lane-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+.tx-exp-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 1.5rem;
+}
+
+/* Initial 2+1 composition: two cards on row one, third card centred below */
+@media (min-width: 768px) {
+  .tx-exp-grid {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 2.5rem;
+    row-gap: 2.5rem;
+  }
+
+  /* Third card spans full width and centres at ~50% to match its siblings */
+  .tx-exp-grid:not([data-collapsed="true"]) .tx-exp-card:nth-child(3) {
+    grid-column: 1 / -1;
+    max-width: calc(50% - 1.25rem);
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+}
+
+/* Connected state: collapse to three equal columns, gaps close */
+@media (min-width: 768px) {
+  .tx-exp-grid[data-collapsed="true"] {
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 0;
+    row-gap: 0;
+  }
+}
+
+.tx-exp-card {
+  border: 1px solid var(--rule);
+  background: var(--paper-raised);
+  padding: 1.5rem;
+  transition:
+    border-color 0.3s ease,
+    opacity 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.tx-exp-card[data-active="true"] {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.tx-exp-card[data-dimmed="true"] {
+  opacity: 0.3;
+}
+
+.tx-exp-card[data-connected="true"] {
+  cursor: pointer;
+}
+
+.tx-exp-card[data-connected="true"]:hover:not([data-active="true"]) {
+  border-color: var(--rule-strong);
+}
+
+.tx-exp-connect-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-inter, ui-sans-serif, system-ui, sans-serif);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.tx-exp-connect-btn:hover,
+.tx-exp-connect-btn:focus-visible {
+  background: var(--accent);
+}
+
+.tx-exp-connect-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tx-exp-card {
+    transition: border-color 0.01ms, opacity 0.01ms, box-shadow 0.01ms;
+  }
+  @keyframes tx-exp-lane-pulse {
+    from, to { opacity: 1; }
+  }
 }
