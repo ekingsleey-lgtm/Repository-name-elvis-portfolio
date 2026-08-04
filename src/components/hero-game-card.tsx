@@ -7,6 +7,7 @@ import { SnakeGame } from "./snake-game";
 export function HeroGameCard() {
   const [buttonVisible, setButtonVisible] = useState(false);
   const [flipped, setFlipped] = useState(false);
+  const [isDead, setIsDead] = useState(false);
 
   const handleAnimationComplete = useCallback(() => {
     setButtonVisible(true);
@@ -18,6 +19,7 @@ export function HeroGameCard() {
 
   const handleFlipBack = useCallback(() => {
     setFlipped(false);
+    setIsDead(false);
   }, []);
 
   return (
@@ -25,10 +27,11 @@ export function HeroGameCard() {
       {/* ── Flip card ── */}
       <div style={{ perspective: "1400px" }}>
         <div
+          className={isDead ? "snake-flip-dead" : ""}
           style={{
             position: "relative",
             transformStyle: "preserve-3d",
-            transition: "transform 0.65s cubic-bezier(0.4, 0, 0.2, 1)",
+            transition: "transform 0.65s cubic-bezier(0.4, 0, 0.2, 1), min-height 0.4s ease",
             transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
           }}
         >
@@ -40,7 +43,7 @@ export function HeroGameCard() {
             <HeroFlowchart onComplete={handleAnimationComplete} />
           </div>
 
-          {/* Back: snake game */}
+          {/* Back: snake game — overflow-hidden removed; canvas layer handles its own clip */}
           <div
             style={{
               position: "absolute",
@@ -49,10 +52,10 @@ export function HeroGameCard() {
               WebkitBackfaceVisibility: "hidden",
               transform: "rotateY(180deg)",
             }}
-            className="overflow-hidden border fc-canvas-wrap"
+            className="border fc-canvas-wrap"
             data-theme="dark"
           >
-            <SnakeGame active={flipped} />
+            <SnakeGame active={flipped} onDead={() => setIsDead(true)} />
             <button
               onClick={handleFlipBack}
               aria-label="Back to diagram"

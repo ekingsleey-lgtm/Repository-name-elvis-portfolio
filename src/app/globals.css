@@ -471,3 +471,11 @@ html {
   0%, 100% { transform: translateY(0); }
   50%       { transform: translateY(5px); }
 }
+
+/* Snake game dead state — mobile only: grow card to reveal completion content.
+   At sm (640px+) the flowchart SVG is already ≥318px so no override is needed. */
+@media (max-width: 639px) {
+  .snake-flip-dead {
+    min-height: 320px;
+  }
+}

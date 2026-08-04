@@ -192,7 +192,7 @@ function GhostBtn({ onClick, children }: { onClick: () => void; children: React.
 
 // ── Main component ───────────────────────────────────────────────────────────
 
-export function SnakeGame({ active }: { active: boolean }) {
+export function SnakeGame({ active, onDead }: { active: boolean; onDead?: () => void }) {
   const cvRef = useRef<HTMLCanvasElement>(null);
   const gsRef = useRef<GS | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -240,6 +240,7 @@ export function SnakeGame({ active }: { active: boolean }) {
       render(cv, gs);
       setFinalScore(gs.score);
       setPhase("dead");
+      onDead?.();
       return;
     }
 
@@ -337,16 +338,20 @@ export function SnakeGame({ active }: { active: boolean }) {
 
   return (
     <div style={{ position: "relative", width: "100%", height: "100%", background: "var(--paper)" }}>
-      <canvas ref={cvRef} style={{ display: "block", width: "100%", height: "100%" }} />
+      {/* Canvas layer — overflow clipped here so game visuals never spill */}
+      <div style={{ position: "absolute", inset: 0, overflow: "hidden" }}>
+        <canvas ref={cvRef} style={{ display: "block", width: "100%", height: "100%" }} />
 
-      {phase === "start" && (
-        <div style={overlay}>
-          <p style={monoSmall}>Eat the decision points to grow</p>
-          <GhostBtn onClick={startGame}>Start game</GhostBtn>
-          <p style={{ ...monoSmall, fontSize: "9px", color: "var(--ink-faint)" }}>Arrow keys or WASD</p>
-        </div>
-      )}
+        {phase === "start" && (
+          <div style={overlay}>
+            <p style={monoSmall}>Eat the decision points to grow</p>
+            <GhostBtn onClick={startGame}>Start game</GhostBtn>
+            <p style={{ ...monoSmall, fontSize: "9px", color: "var(--ink-faint)" }}>Arrow keys or WASD</p>
+          </div>
+        )}
+      </div>
 
+      {/* Dead state — sibling of the canvas layer, not clipped, fills the grown container */}
       {phase === "dead" && (
         <div style={overlay}>
           <p style={displayHead}>Game over</p>
