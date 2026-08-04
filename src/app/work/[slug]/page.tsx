@@ -50,7 +50,7 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
   return (
     <article>
       {/* Hero ------------------------------------------------------- */}
-      <Container className="py-16 lg:py-24">
+      <Container className="py-10 lg:py-24">
         <div className="flex items-center gap-4">
           <Label className="tnum">{study.index}</Label>
           <span className="h-px flex-1 bg-rule" aria-hidden="true" />
@@ -73,13 +73,13 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
         </div>
 
         {study.period ? (
-          <div className="mt-12">
+          <div className="mt-8 lg:mt-12">
             <StudyMeta study={study} />
           </div>
         ) : null}
 
         {study.heroMetrics ? (
-          <dl className="mt-12 grid gap-x-8 gap-y-8 border-t border-rule pt-8 sm:grid-cols-3">
+          <dl className="mt-8 grid gap-x-8 gap-y-8 border-t border-rule pt-8 sm:grid-cols-3 lg:mt-12">
             {study.heroMetrics.map((metric) => (
               <div key={metric.caption}>
                 <dt className="display tnum text-[clamp(2rem,4vw,3rem)] leading-none text-accent">

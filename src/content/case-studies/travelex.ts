@@ -15,6 +15,13 @@ export const travelex: CaseStudy = {
     alt: "Travelex worldwide money branding",
     dims: { w: 1920, h: 1200 },
   },
+  cover: {
+    src: "/work/travelex/hero.jpg",
+    alt: "Travelex worldwide money branding",
+    width: "full",
+    dims: { w: 1920, h: 1200 },
+    priority: true,
+  },
   blocks: [
     // ── Hero ────────────────────────────────────────────────────────────────
     {

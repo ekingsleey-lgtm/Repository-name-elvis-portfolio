@@ -14,11 +14,11 @@ export default function WorkPage() {
   const earlier = caseStudies.slice(3);
 
   return (
-    <Container className="py-20 lg:py-28">
+    <Container className="py-12 lg:py-28">
       <Label>Selected work</Label>
       <h1 className="display mt-6 text-[clamp(2.5rem,6vw,4.5rem)]">Case studies</h1>
 
-      <div className="mt-16">
+      <div className="mt-10 lg:mt-16">
         <WorkIndex studies={featured} cols={3} />
       </div>
 

@@ -13,7 +13,7 @@ export default function Home() {
     <>
       {/* ── Hero ─────────────────────────────────────────────────────── */}
       <Container>
-        <div className="grid items-center gap-12 py-20 lg:grid-cols-2 lg:py-28">
+        <div className="grid items-center gap-8 py-10 sm:py-14 lg:grid-cols-2 lg:gap-12 lg:py-28">
           <div>
             <Label>{site.role}</Label>
             <h1 className="display mt-6 text-[clamp(2.75rem,8vw,5.5rem)]">
@@ -50,8 +50,8 @@ export default function Home() {
 
       {/* ── Stats bridge — editorial, not corporate ───────────────────── */}
       <Container>
-        <div className="border-t border-rule py-20 lg:py-28">
-          <div className="grid gap-12 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-20">
+        <div className="border-t border-rule py-10 sm:py-14 lg:py-28">
+          <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-20">
             <Reveal>
               <p className="display max-w-[26ch] text-[clamp(1.5rem,2.8vw,2.25rem)] leading-[1.18]">
                 {site.statsEditorial}
@@ -77,10 +77,10 @@ export default function Home() {
         {/* 01 — Dext: image-led, enterprise scale */}
         <Reveal className="border-b border-rule">
           <Link href={`/work/${dext.slug}`} className="group block">
-            <div className="grid min-h-[400px] lg:min-h-[500px] lg:grid-cols-[58fr_42fr]">
+            <div className="grid lg:min-h-[500px] lg:grid-cols-[58fr_42fr]">
 
               {/* Image side */}
-              <div className="relative overflow-hidden bg-paper-sunk max-h-[280px] lg:max-h-none">
+              <div className="relative aspect-video overflow-hidden bg-paper-sunk lg:aspect-auto">
                 <Image
                   src="/work/dext/hmrc-hero.jpg"
                   alt={dext.cover!.alt}
@@ -92,7 +92,7 @@ export default function Home() {
               </div>
 
               {/* Type side */}
-              <div className="relative flex flex-col justify-end overflow-hidden p-8 lg:p-12 xl:p-16">
+              <div className="relative flex flex-col justify-end overflow-hidden p-6 sm:p-8 lg:p-12 xl:p-16">
                 <span
                   aria-hidden="true"
                   className="display pointer-events-none absolute -top-2 right-0 hidden select-none text-[10rem] leading-none text-ink opacity-[0.04] lg:block lg:text-[13rem]"
@@ -134,7 +134,7 @@ export default function Home() {
             <div className="grid lg:grid-cols-[42fr_58fr]">
 
               {/* Type side */}
-              <div className="relative flex min-h-[320px] flex-col justify-center overflow-hidden p-8 lg:min-h-[460px] lg:p-12 xl:p-16">
+              <div className="relative flex flex-col justify-center overflow-hidden p-6 sm:p-8 lg:min-h-[460px] lg:p-12 xl:p-16">
                 <span
                   aria-hidden="true"
                   className="display pointer-events-none absolute left-6 top-6 hidden select-none text-[9rem] leading-none text-ink opacity-[0.04] lg:block lg:left-10 lg:top-8 lg:text-[12rem]"
@@ -168,7 +168,7 @@ export default function Home() {
               </div>
 
               {/* Image side — appears first on mobile */}
-              <div className="relative order-first min-h-[240px] overflow-hidden bg-paper-sunk lg:order-last">
+              <div className="relative order-first aspect-video overflow-hidden bg-paper-sunk lg:aspect-auto lg:order-last">
                 <Image
                   src="/work/kfc/kfc-hero.jpg"
                   alt={kfc.cover!.alt}
@@ -187,7 +187,7 @@ export default function Home() {
             <div className="grid lg:grid-cols-[58fr_42fr]">
 
               {/* Image side */}
-              <div className="relative min-h-[240px] overflow-hidden bg-paper-sunk lg:min-h-[460px]">
+              <div className="relative aspect-video overflow-hidden bg-paper-sunk lg:aspect-auto lg:min-h-[460px]">
                 <Image
                   src="/work/travelex/hero.jpg"
                   alt="Travelex worldwide money branding"
@@ -198,7 +198,7 @@ export default function Home() {
               </div>
 
               {/* Type side */}
-              <div className="relative flex flex-col justify-center overflow-hidden bg-paper-sunk p-8 lg:p-12 xl:p-16">
+              <div className="relative flex flex-col justify-center overflow-hidden bg-paper-sunk p-6 sm:p-8 lg:p-12 xl:p-16">
                 <span
                   aria-hidden="true"
                   className="display pointer-events-none absolute bottom-0 right-0 hidden translate-x-4 translate-y-4 select-none text-[10rem] leading-[0.85] text-ink opacity-[0.04] lg:block"
@@ -266,13 +266,13 @@ export default function Home() {
                 </span>
               </div>
 
-              {/* Image side */}
-              <div className="relative hidden overflow-hidden border-l border-rule bg-paper-sunk lg:block">
+              {/* Image side — hidden on mobile previously, now restored */}
+              <div className="relative order-first aspect-video overflow-hidden bg-paper-sunk lg:aspect-auto lg:border-l lg:border-rule lg:order-last">
                 <Image
                   src="/work/guardian/guardian-hero.jpg"
                   alt={guardian.cover!.alt}
                   fill
-                  sizes="42vw"
+                  sizes="(min-width: 1024px) 42vw, 100vw"
                   className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.025]"
                 />
               </div>
@@ -282,7 +282,7 @@ export default function Home() {
       </div>
 
       {/* All work link */}
-      <Container className="py-8">
+      <Container className="py-4 sm:py-8">
         <div className="flex justify-end">
           <Link
             href="/work"
@@ -294,9 +294,9 @@ export default function Home() {
       </Container>
 
       {/* ── Approach — "How I think" ──────────────────────────────────── */}
-      <Container className="mt-24 lg:mt-40">
+      <Container className="mt-14 lg:mt-40">
         <Reveal>
-          <div className="border-t border-rule pt-16 lg:pt-20">
+          <div className="border-t border-rule pt-10 lg:pt-20">
             <Label>How I think</Label>
             <h2 className="display mt-6 max-w-[22ch] text-[clamp(2rem,4vw,3.25rem)] leading-[1.1]">
               I thrive in the gap between <Em>ambiguity</Em> and clarity.
@@ -304,12 +304,12 @@ export default function Home() {
           </div>
         </Reveal>
 
-        <div className="mt-14 grid border-t border-rule sm:grid-cols-2">
+        <div className="mt-8 grid border-t border-rule sm:grid-cols-2 lg:mt-14">
           {approachStatements.map((statement, i) => (
             <Reveal
               key={statement}
               className={[
-                "border-b border-rule py-10",
+                "border-b border-rule py-6 sm:py-10",
                 i % 2 === 0 ? "sm:border-r sm:pr-12" : "sm:pl-12",
               ].join(" ")}
             >
@@ -319,7 +319,7 @@ export default function Home() {
         </div>
 
         <Reveal>
-          <div className="mt-10">
+          <div className="mt-6 lg:mt-10">
             <Link
               href="/about"
               className="link-underline text-sm text-ink-soft transition-colors duration-300 hover:text-ink"
@@ -331,12 +331,12 @@ export default function Home() {
       </Container>
 
       {/* ── Contact — sparse, confident ───────────────────────────────── */}
-      <Container className="mt-24 lg:mt-40">
-        <div className="border-t border-rule py-28 lg:py-44">
+      <Container className="mt-14 lg:mt-40">
+        <div className="border-t border-rule py-14 lg:py-44">
           <Reveal>
             <Label>Contact</Label>
             <p className="mt-6 max-w-[52ch] leading-relaxed text-ink-soft">
-              <Em>Complex problems</Em> are my favourite kind. If you&rsquo;re
+              <Em>Complex problems</Em>{" "}are my favourite kind. If you&rsquo;re
               working on something at the intersection of strategy, behaviour,
               and technical constraint — I&rsquo;d like to hear about it.
             </p>

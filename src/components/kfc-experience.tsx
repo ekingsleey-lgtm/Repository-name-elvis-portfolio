@@ -71,6 +71,78 @@ const LOOP_NODES = [
   "Customer Wins Again",
 ];
 
+/* ─── Experience completion cue ─────────────────────────────── */
+
+function ExperienceCompletionCue({
+  visible,
+  title,
+  body,
+}: {
+  visible: boolean;
+  title: string;
+  body: string;
+}) {
+  return (
+    <div
+      aria-live="polite"
+      style={{
+        marginTop: "1.75rem",
+        paddingTop: "1.75rem",
+        borderTop: "1px solid var(--rule)",
+        textAlign: "center",
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(14px)",
+        transition:
+          "opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1)",
+      }}
+    >
+      <span
+        className="label"
+        style={{ color: "var(--success)", display: "block", marginBottom: "0.625rem" }}
+      >
+        ✓ {title}
+      </span>
+      <p
+        style={{
+          fontSize: "0.9375rem",
+          lineHeight: 1.65,
+          color: "var(--ink-soft)",
+          maxWidth: "34ch",
+          margin: "0 auto",
+        }}
+      >
+        {body}
+      </p>
+      <div
+        style={{
+          marginTop: "1.5rem",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "0.375rem",
+        }}
+      >
+        <span className="label label-muted" style={{ fontSize: "0.5625rem" }}>
+          Continue reading
+        </span>
+        <span
+          aria-hidden="true"
+          style={{
+            display: "block",
+            fontSize: "1rem",
+            color: "var(--ink-faint)",
+            animation: visible
+              ? "exp-arrow-bounce 1.8s ease-in-out 0.8s infinite"
+              : "none",
+          }}
+        >
+          ↓
+        </span>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Reduced-motion hook ────────────────────────────────────── */
 function useReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -888,6 +960,7 @@ function BehaviourLoop({ visible, reduced }: { visible: boolean; reduced: boolea
 function ReflectionSection({ visible, reduced }: { visible: boolean; reduced: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const [contentVisible, setContentVisible] = useState(reduced);
+  const [completionVisible, setCompletionVisible] = useState(false);
 
   useEffect(() => {
     if (!visible) return;
@@ -898,6 +971,7 @@ function ReflectionSection({ visible, reduced }: { visible: boolean; reduced: bo
           ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
         }, 80);
       }
+      setTimeout(() => setCompletionVisible(true), reduced ? 600 : 3400);
     }, 50);
     return () => clearTimeout(t);
   }, [visible, reduced]);
@@ -967,6 +1041,12 @@ function ReflectionSection({ visible, reduced }: { visible: boolean; reduced: bo
               </p>
             </div>
 
+            <ExperienceCompletionCue
+              visible={completionVisible}
+              title="Reward journey complete"
+              body="See how this behaviour translated into measurable business impact."
+            />
+
           </div>
         </div>
       </Container>
@@ -1010,62 +1090,80 @@ export function KfcExperience() {
 
   return (
     <section aria-labelledby="kfc-exp-heading" className="mt-20 lg:mt-28">
-      {/* Cinematic chapter transition */}
-      <Container>
-        <Rule className="mb-14 lg:mb-16" />
-        <div className="mx-auto max-w-[52ch] text-center">
-          <Label muted className="mb-6 block">Experience</Label>
-          <h2
-            id="kfc-exp-heading"
-            className="display text-balance text-[clamp(1.75rem,3.5vw,2.75rem)] leading-[1.1]"
-          >
-            You&apos;ve seen how it was designed.
-            <br />
-            <em className="italic text-accent">Now experience it.</em>
-          </h2>
-          <p className="mt-6 leading-relaxed text-ink-soft">
-            Rather than simply reading about Reward Sharing, step inside the
-            product and experience the behavioural journey that inspired the
-            feature.
-          </p>
-          <p className="mt-2 text-sm text-ink-muted">
-            This takes around 20 seconds.
-          </p>
-        </div>
-      </Container>
-
-      {/* Phone section — dark background */}
+      {/* Full-width warm cream band wrapping the entire experience */}
       <div
-        className="full-bleed mt-10"
+        className="full-bleed"
         style={{
-          backgroundColor: "#0e0e0e",
-          padding: "52px 24px 56px",
+          backgroundColor: "var(--band-kfc)",
+          paddingTop: "4.5rem",
+          paddingBottom: "4.5rem",
         }}
       >
-        <PhoneFrame>
-          <AppBar title={appTitle} />
+        {/* ── Section intro ── */}
+        <Container>
+          <Rule className="mb-12 lg:mb-14" />
+          <div className="mx-auto max-w-[52ch] text-center">
+            <Label muted className="mb-3 block">Interactive Experience</Label>
+            <h2
+              id="kfc-exp-heading"
+              className="display text-balance text-[clamp(1.75rem,3.5vw,2.75rem)] leading-[1.1]"
+            >
+              You&apos;ve seen how it was designed.
+              <br />
+              <em className="italic text-accent">Now experience it.</em>
+            </h2>
+            <p className="mt-6 leading-relaxed text-ink-soft">
+              Rather than simply reading about Reward Sharing, step inside the
+              product and experience the behavioural journey that inspired the
+              feature.
+            </p>
+            <p className="mt-2 text-sm text-ink-muted">
+              This takes around 20 seconds.
+            </p>
+          </div>
+        </Container>
 
-          {stage === "intro" && (
-            <StageIntro onTap={handleTap} reduced={reduced} />
-          )}
-          {stage === "spinning" && (
-            <StageSpinning onDone={handleSpinDone} />
-          )}
-          {stage === "revealed" && (
-            <StageRevealed onChoose={handleChoose} reduced={reduced} />
-          )}
-          {stage === "outcome" && path && (
-            <StageOutcome
-              path={path}
-              reduced={reduced}
-              onSeeThinking={handleSeeThinking}
-            />
-          )}
-        </PhoneFrame>
+        {/* ── Phone — dark inner band ── */}
+        <div
+          style={{
+            backgroundColor: "#0e0e0e",
+            padding: "52px 24px 56px",
+            marginTop: "2.5rem",
+          }}
+        >
+          <PhoneFrame>
+            <AppBar title={appTitle} />
+
+            {stage === "intro" && (
+              <StageIntro onTap={handleTap} reduced={reduced} />
+            )}
+            {stage === "spinning" && (
+              <StageSpinning onDone={handleSpinDone} />
+            )}
+            {stage === "revealed" && (
+              <StageRevealed onChoose={handleChoose} reduced={reduced} />
+            )}
+            {stage === "outcome" && path && (
+              <StageOutcome
+                path={path}
+                reduced={reduced}
+                onSeeThinking={handleSeeThinking}
+              />
+            )}
+          </PhoneFrame>
+        </div>
+
+        {/* ── Caption ── */}
+        <Container className="mt-5">
+          <p className="mx-auto max-w-[52ch] text-center text-sm text-ink-muted">
+            Tap the bucket to experience a customer&apos;s moment of winning — and see how
+            the choice to share sets the loyalty loop in motion.
+          </p>
+        </Container>
+
+        {/* ── Reflection — appears after "See the design thinking" ── */}
+        <ReflectionSection visible={showReflection} reduced={reduced} />
       </div>
-
-      {/* Reflection — appears after user requests it */}
-      <ReflectionSection visible={showReflection} reduced={reduced} />
     </section>
   );
 }

@@ -21,6 +21,10 @@
   --accent-soft: #f2ddd7;
   --success: #166534;
   --success-soft: #dcfce7;
+  /* Interactive experience band backgrounds */
+  --band-kfc: #faf6ef;
+  --band-dext: #f1f5f7;
+  --band-travelex: #edf3f6;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -38,6 +42,9 @@
     --accent-soft: #37211d;
     --success: #4ade80;
     --success-soft: #052e16;
+    --band-kfc: #1c1912;
+    --band-dext: #12151a;
+    --band-travelex: #101520;
   }
 }
 
@@ -56,6 +63,9 @@
   --accent-soft: #f2ddd7;
   --success: #166534;
   --success-soft: #dcfce7;
+  --band-kfc: #faf6ef;
+  --band-dext: #f1f5f7;
+  --band-travelex: #edf3f6;
 }
 
 :root[data-theme="dark"] {
@@ -72,6 +82,9 @@
   --accent-soft: #37211d;
   --success: #4ade80;
   --success-soft: #052e16;
+  --band-kfc: #1c1912;
+  --band-dext: #12151a;
+  --band-travelex: #101520;
 }
 
 @theme inline {
@@ -451,4 +464,10 @@ html {
   @keyframes tx-exp-lane-pulse {
     from, to { opacity: 1; }
   }
+}
+
+/* Shared interactive experience completion cue */
+@keyframes exp-arrow-bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(5px); }
 }

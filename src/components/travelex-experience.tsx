@@ -402,6 +402,81 @@ function FinalMessage({ visible }: { visible: boolean }) {
   );
 }
 
+// ── Completion cue (shared pattern) ──────────────────────────────────────────
+
+function ExperienceCompletionCue({
+  visible,
+  title,
+  body,
+}: {
+  visible: boolean;
+  title: string;
+  body: string;
+}) {
+  return (
+    <div
+      aria-live="polite"
+      style={{
+        marginTop: "1.75rem",
+        paddingTop: "1.75rem",
+        borderTop: "1px solid var(--rule)",
+        textAlign: "center",
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(14px)",
+        transition:
+          "opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1)",
+      }}
+    >
+      <span
+        className="label"
+        style={{ color: "var(--success)", display: "block", marginBottom: "0.625rem" }}
+      >
+        ✓ {title}
+      </span>
+      <p
+        style={{
+          fontSize: "0.9375rem",
+          lineHeight: 1.65,
+          color: "var(--ink-soft)",
+          maxWidth: "34ch",
+          margin: "0 auto",
+        }}
+      >
+        {body}
+      </p>
+      <div
+        style={{
+          marginTop: "1.5rem",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "0.375rem",
+        }}
+      >
+        <span
+          className="label label-muted"
+          style={{ fontSize: "0.5625rem" }}
+        >
+          Continue reading
+        </span>
+        <span
+          aria-hidden="true"
+          style={{
+            display: "block",
+            fontSize: "1rem",
+            color: "var(--ink-faint)",
+            animation: visible
+              ? "exp-arrow-bounce 1.8s ease-in-out 0.8s infinite"
+              : "none",
+          }}
+        >
+          ↓
+        </span>
+      </div>
+    </div>
+  );
+}
+
 // ── Root export ───────────────────────────────────────────────────────────────
 
 export function TravelexExperience() {
@@ -414,6 +489,7 @@ export function TravelexExperience() {
     new Set(),
   );
   const [showFinal, setShowFinal] = useState(false);
+  const [completionVisible, setCompletionVisible] = useState(false);
   const gridRef = useRef<HTMLDivElement>(null);
 
   const handleConnect = useCallback(() => {
@@ -521,154 +597,187 @@ export function TravelexExperience() {
     }
   }, [exploredLayers.size, showFinal]);
 
+  useEffect(() => {
+    if (!showFinal) return;
+    const t = setTimeout(
+      () => setCompletionVisible(true),
+      reduced ? 600 : 3200,
+    );
+    return () => clearTimeout(t);
+  }, [showFinal, reduced]);
+
   const activeLayerData = LAYERS.find((l) => l.id === activeLayer) ?? null;
 
   return (
     <section aria-labelledby="tx-exp-heading" className="mt-20 lg:mt-28">
-
-      {/* ── Section header ── */}
-      <Container>
-        <Rule className="mb-14 lg:mb-16" />
-        <div className="mx-auto max-w-[52ch] text-center">
-          <Label muted className="mb-6 block">Experience</Label>
-          <h2
-            id="tx-exp-heading"
-            className="display text-balance text-[clamp(1.75rem,3.5vw,2.75rem)] leading-[1.1]"
-          >
-            You&apos;ve seen the blueprint.
-            <br />
-            <em className="italic text-accent">Now explore each layer.</em>
-          </h2>
-          <p className="mt-6 leading-relaxed text-ink-soft">
-            The service blueprint mapped three journeys side by side —
-            customer, partner, and operational. Select each layer to see
-            what the research revealed.
-          </p>
-          <p className="mt-2 text-sm text-ink-muted">
-            Takes around 45 seconds to explore all three.
-          </p>
-        </div>
-      </Container>
-
-      {/* ── Cards + blueprint ── */}
-      <Container className="mt-10">
-        <div
-          ref={gridRef}
-          className="tx-exp-grid"
-          data-collapsed={String(collapsed)}
-          role="group"
-          aria-label="Three journey layers"
-        >
-          {LAYERS.map((layer) => (
-            <JourneyCard
-              key={layer.id}
-              layer={layer}
-              connected={connected}
-              active={activeLayer === layer.id}
-              anyActive={activeLayer !== null}
-              onSelect={() => handleSelectLayer(layer.id)}
-            />
-          ))}
-        </div>
-
-        <BlueprintSchematic
-          visible={connected}
-          activeLayer={activeLayer}
-          reduced={reduced}
-        />
-
-        {/* Connect CTA — hides when the layout collapses */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "2rem",
-            overflow: "hidden",
-            maxHeight: collapsed ? "0" : "80px",
-            opacity: collapsed ? 0 : 1,
-            transition: "max-height 0.4s ease 0.2s, opacity 0.25s ease",
-          }}
-          aria-hidden={collapsed}
-        >
-          <button
-            className="tx-exp-connect-btn"
-            onClick={handleConnect}
-            disabled={connecting || collapsed}
-            aria-label="Connect the three journeys into the service blueprint"
-          >
-            {connecting ? "Connecting…" : "Connect the journeys"}
-            {!connecting && (
-              <span aria-hidden="true" style={{ fontSize: "1rem" }}>
-                →
-              </span>
-            )}
-          </button>
-        </div>
-
-        {/* Layer interaction area — appears once connected */}
-        {connected && (
-          <div style={{ marginTop: "1rem" }}>
-            {activeLayer === null && (
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                  marginTop: "1.75rem",
-                }}
-                aria-live="polite"
-              >
-                <span
-                  style={{
-                    flex: 1,
-                    height: "1px",
-                    background: "var(--rule)",
-                    display: "block",
-                  }}
-                  aria-hidden="true"
-                />
-                <p
-                  style={{
-                    fontFamily:
-                      "var(--font-plex-mono, ui-monospace, monospace)",
-                    fontSize: "0.625rem",
-                    letterSpacing: "0.14em",
-                    textTransform: "uppercase",
-                    color: "var(--ink-muted)",
-                    margin: 0,
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  Select a layer to explore it
-                </p>
-                <span
-                  style={{
-                    flex: 1,
-                    height: "1px",
-                    background: "var(--rule)",
-                    display: "block",
-                  }}
-                  aria-hidden="true"
-                />
-              </div>
-            )}
-
-            <RevealPanel
-              layer={activeLayerData}
-              visible={activeLayer !== null}
-            />
-
-            {exploredLayers.size > 0 && (
-              <ProgressDots
-                total={LAYERS.length}
-                explored={exploredLayers}
-              />
-            )}
+      {/* Full-width soft blue-grey band wrapping the entire experience */}
+      <div
+        className="full-bleed"
+        style={{
+          backgroundColor: "var(--band-travelex)",
+          paddingTop: "4.5rem",
+          paddingBottom: "4.5rem",
+        }}
+      >
+        {/* ── Section header ── */}
+        <Container>
+          <Rule className="mb-12 lg:mb-14" />
+          <div className="mx-auto max-w-[52ch] text-center">
+            <Label muted className="mb-3 block">Interactive Experience</Label>
+            <h2
+              id="tx-exp-heading"
+              className="display text-balance text-[clamp(1.75rem,3.5vw,2.75rem)] leading-[1.1]"
+            >
+              You&apos;ve seen the blueprint.
+              <br />
+              <em className="italic text-accent">Now explore each layer.</em>
+            </h2>
+            <p className="mt-6 leading-relaxed text-ink-soft">
+              The service blueprint mapped three journeys side by side —
+              customer, partner, and operational. Select each layer to see
+              what the research revealed.
+            </p>
+            <p className="mt-2 text-sm text-ink-muted">
+              Takes around 45 seconds to explore all three.
+            </p>
           </div>
-        )}
+        </Container>
 
-        <FinalMessage visible={showFinal} />
-      </Container>
+        {/* ── Cards + blueprint ── */}
+        <Container className="mt-10">
+          <div
+            ref={gridRef}
+            className="tx-exp-grid"
+            data-collapsed={String(collapsed)}
+            role="group"
+            aria-label="Three journey layers"
+          >
+            {LAYERS.map((layer) => (
+              <JourneyCard
+                key={layer.id}
+                layer={layer}
+                connected={connected}
+                active={activeLayer === layer.id}
+                anyActive={activeLayer !== null}
+                onSelect={() => handleSelectLayer(layer.id)}
+              />
+            ))}
+          </div>
+
+          <BlueprintSchematic
+            visible={connected}
+            activeLayer={activeLayer}
+            reduced={reduced}
+          />
+
+          {/* Connect CTA — hides when the layout collapses */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "2rem",
+              overflow: "hidden",
+              maxHeight: collapsed ? "0" : "80px",
+              opacity: collapsed ? 0 : 1,
+              transition: "max-height 0.4s ease 0.2s, opacity 0.25s ease",
+            }}
+            aria-hidden={collapsed}
+          >
+            <button
+              className="tx-exp-connect-btn"
+              onClick={handleConnect}
+              disabled={connecting || collapsed}
+              aria-label="Connect the three journeys into the service blueprint"
+            >
+              {connecting ? "Connecting…" : "Connect the journeys"}
+              {!connecting && (
+                <span aria-hidden="true" style={{ fontSize: "1rem" }}>
+                  →
+                </span>
+              )}
+            </button>
+          </div>
+
+          {/* Layer interaction area — appears once connected */}
+          {connected && (
+            <div style={{ marginTop: "1rem" }}>
+              {activeLayer === null && (
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "1rem",
+                    marginTop: "1.75rem",
+                  }}
+                  aria-live="polite"
+                >
+                  <span
+                    style={{
+                      flex: 1,
+                      height: "1px",
+                      background: "var(--rule)",
+                      display: "block",
+                    }}
+                    aria-hidden="true"
+                  />
+                  <p
+                    style={{
+                      fontFamily:
+                        "var(--font-plex-mono, ui-monospace, monospace)",
+                      fontSize: "0.625rem",
+                      letterSpacing: "0.14em",
+                      textTransform: "uppercase",
+                      color: "var(--ink-muted)",
+                      margin: 0,
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    Select a layer to explore it
+                  </p>
+                  <span
+                    style={{
+                      flex: 1,
+                      height: "1px",
+                      background: "var(--rule)",
+                      display: "block",
+                    }}
+                    aria-hidden="true"
+                  />
+                </div>
+              )}
+
+              <RevealPanel
+                layer={activeLayerData}
+                visible={activeLayer !== null}
+              />
+
+              {exploredLayers.size > 0 && (
+                <ProgressDots
+                  total={LAYERS.length}
+                  explored={exploredLayers}
+                />
+              )}
+            </div>
+          )}
+
+          <FinalMessage visible={showFinal} />
+
+          <ExperienceCompletionCue
+            visible={completionVisible}
+            title="Journeys connected"
+            body="See how these decisions became the platform."
+          />
+        </Container>
+
+        {/* ── Caption ── */}
+        <Container className="mt-5">
+          <p className="mx-auto max-w-[52ch] text-center text-sm text-ink-muted">
+            Each card represents one layer of the B2B2C service blueprint — the
+            document that gave the programme a shared model before a single
+            screen was designed.
+          </p>
+        </Container>
+      </div>
     </section>
   );
 }

@@ -4,7 +4,7 @@ import { site } from "@/content/site";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-32 border-t border-rule">
+    <footer className="mt-14 border-t border-rule sm:mt-20 lg:mt-32">
       <Container>
         <div className="flex flex-col gap-8 py-12 sm:flex-row sm:items-end sm:justify-between">
           <div>

@@ -14,7 +14,7 @@ export default function AboutPage() {
     <>
       {/* Hero ------------------------------------------------------- */}
       <Container>
-        <div className="grid items-end gap-12 py-20 lg:grid-cols-[minmax(0,1fr)_24rem] lg:py-28">
+        <div className="grid items-end gap-8 py-12 lg:grid-cols-[minmax(0,1fr)_24rem] lg:gap-12 lg:py-28">
           <div>
             <Label>{about.eyebrow}</Label>
             <h1 className="display mt-6 text-[clamp(2.5rem,7vw,5rem)]">
@@ -72,7 +72,7 @@ export default function AboutPage() {
       </Container>
 
       {/* AI-native -------------------------------------------------- */}
-      <Container className="mt-24 lg:mt-28">
+      <Container className="mt-14 lg:mt-28">
         <div className="grid gap-x-16 gap-y-8 border border-rule bg-paper-raised p-8 sm:p-12 lg:grid-cols-2">
           <div>
             <h2 className="display text-balance text-3xl">
@@ -96,7 +96,7 @@ export default function AboutPage() {
       </Container>
 
       {/* Mentoring -------------------------------------------------- */}
-      <Container className="mt-24 lg:mt-32">
+      <Container className="mt-14 lg:mt-32">
         <div className="grid gap-x-16 gap-y-6 lg:grid-cols-2">
           <div>
             <Label>{about.mentoring.label}</Label>
@@ -109,7 +109,7 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <ul className="mt-12 grid gap-8 sm:grid-cols-2">
+        <ul className="mt-8 grid gap-8 sm:grid-cols-2 lg:mt-12">
           {about.mentoring.entries.map((entry) => (
             <li key={entry.title}>
               <div className="overflow-hidden border border-rule bg-paper-raised">
@@ -128,7 +128,7 @@ export default function AboutPage() {
       </Container>
 
       {/* Skills ----------------------------------------------------- */}
-      <Container className="mt-24 lg:mt-32">
+      <Container className="mt-14 lg:mt-32">
         <Rule className="mb-14" />
         <div className="grid gap-x-16 gap-y-10 lg:grid-cols-2">
           <div>
@@ -163,7 +163,7 @@ export default function AboutPage() {
       </Container>
 
       {/* Contact ---------------------------------------------------- */}
-      <Container className="mt-24 lg:mt-32">
+      <Container className="mt-14 lg:mt-32">
         <div
           id="contact"
           className="grid scroll-mt-24 gap-x-16 gap-y-10 border border-rule bg-paper-raised p-8 sm:p-12 lg:grid-cols-2"
