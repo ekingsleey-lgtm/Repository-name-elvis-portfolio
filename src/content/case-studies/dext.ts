@@ -35,8 +35,15 @@ export const dext: CaseStudy = {
       ],
     },
     {
-      type: "statement",
+      type: "prose",
       label: "The challenge",
+      body: [
+        "For the practices most affected by Making Tax Digital — those managing hundreds of clients — the change meant a new operating rhythm, not just a new compliance rule. New patterns of work, new sources of risk, new questions about what to prioritise each quarter.",
+        "But when we started designing, none of that workflow existed yet. The legislation hadn't come into force. Accountants could articulate what was required of them. They couldn't yet articulate what it would feel like to actually do it.",
+      ],
+    },
+    {
+      type: "statement",
       body: "We weren't solving a problem users had already experienced — we were designing for behaviours they understood conceptually but hadn't yet developed in practice.",
     },
     {
@@ -396,7 +403,17 @@ export const dext: CaseStudy = {
       ],
     },
   ],
-  interactiveSplitBefore: "Business impact",
+  interactiveSplitBefore: "Three constraints",
+  chapters: [
+    { id: "overview",   label: "Overview",   blockLabel: "Overview" },
+    { id: "challenge",  label: "Challenge",  blockLabel: "The challenge" },
+    { id: "strategy",   label: "Strategy",   blockLabel: "Product strategy" },
+    { id: "research",   label: "Research",   blockLabel: "Framing the problem" },
+    { id: "design",     label: "Design",     blockLabel: "Defining the experience" },
+    { id: "testing",    label: "Testing",    blockLabel: "Validating assumptions" },
+    { id: "impact",     label: "Impact",     blockLabel: "Business impact" },
+    { id: "reflection", label: "Reflection", blockLabel: "_reflection" },
+  ],
   reflection: {
     heading: "Great product design aligns people around the right problem",
     body: [

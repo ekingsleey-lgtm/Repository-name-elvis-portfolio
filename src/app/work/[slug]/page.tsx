@@ -11,6 +11,12 @@ import { KfcHeroComposition } from "@/components/kfc-hero";
 import { DextChallenge } from "@/components/dext-challenge";
 import { KfcExperience } from "@/components/kfc-experience";
 import { TravelexExperience } from "@/components/travelex-experience";
+import { ChapterNav } from "@/components/chapter-nav";
+import { ShareControls } from "@/components/share-controls";
+import { ProgressBar } from "@/components/progress-bar";
+import { ReadingTimeStatus } from "@/components/reading-time-status";
+import { NextProject } from "@/components/next-project";
+import { estimateReadingTime, chapterReadTimes } from "@/lib/reading-time";
 import type { Block } from "@/content/types";
 import { site } from "@/content/site";
 
@@ -46,9 +52,57 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
   if (!study) notFound();
 
   const { prev, next } = getAdjacent(study.slug);
+  const readTime = estimateReadingTime(study);
+
+  // Build chapter list augmented with per-chapter read-time estimates
+  const rawChapters = study.chapters ?? [];
+  const estTimes = rawChapters.length > 0 ? chapterReadTimes(study) : new Map();
+  const chapters = rawChapters.map((ch) => ({
+    ...ch,
+    estMins: estTimes.get(ch.id),
+  }));
+
+  // Map from block label → chapter id for anchor injection
+  const chaptersMap = new Map(
+    chapters
+      .filter((ch) => ch.blockLabel !== "_reflection")
+      .map((ch) => [ch.blockLabel, ch.id]),
+  );
+  const hasReflectionChapter = chapters.some(
+    (ch) => ch.blockLabel === "_reflection",
+  );
+
+  function renderBlocks(blocks: Block[], offsetSpacing = "mt-20 lg:mt-28") {
+    return (
+      <div className={offsetSpacing}>
+        {blocks.map((block, i) => {
+          const label = blockLabel(block);
+          const chapterId = label ? chaptersMap.get(label) : undefined;
+          const startsBeat = label || blockHeading(block);
+          const spacing =
+            i === 0 ? "" : startsBeat ? "mt-20 lg:mt-24" : "mt-10 lg:mt-12";
+          return (
+            <div
+              key={i}
+              id={chapterId}
+              className={`${spacing}${chapterId ? " scroll-mt-20" : ""}`}
+            >
+              <CaseBlock block={block} />
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
 
   return (
     <article>
+      {/* Reading progress bar — fixed beneath header, tracks article scroll */}
+      <ProgressBar />
+
+      {/* Chapter nav (fixed — renders outside the flow) */}
+      {chapters.length > 0 && <ChapterNav chapters={chapters} />}
+
       {/* Hero ------------------------------------------------------- */}
       <Container className="py-10 lg:py-24">
         <div className="flex items-center gap-4">
@@ -74,9 +128,17 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
 
         {study.period ? (
           <div className="mt-8 lg:mt-12">
-            <StudyMeta study={study} />
+            <StudyMeta
+              study={study}
+              readTimeContent={<ReadingTimeStatus readTime={readTime} />}
+            />
           </div>
         ) : null}
+
+        {/* Share — near the beginning */}
+        <div className="mt-5">
+          <ShareControls title={study.title} path={`/work/${study.slug}`} />
+        </div>
 
         {study.heroMetrics ? (
           <dl className="mt-8 grid gap-x-8 gap-y-8 border-t border-rule pt-8 sm:grid-cols-3 lg:mt-12">
@@ -147,35 +209,14 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
         // Delivery and Impact — the emotional climax of the narrative arc.
         const splitLabel = study.interactiveSplitBefore;
         const splitIdx = splitLabel
-          ? study.blocks.findIndex(b => blockLabel(b) === splitLabel)
+          ? study.blocks.findIndex((b) => blockLabel(b) === splitLabel)
           : -1;
         const hasExperience = splitIdx >= 0;
 
         const beforeBlocks = hasExperience
           ? study.blocks.slice(0, splitIdx)
           : study.blocks;
-        const afterBlocks = hasExperience
-          ? study.blocks.slice(splitIdx)
-          : [];
-
-        function renderBlocks(blocks: Block[], offsetSpacing = "mt-20 lg:mt-28") {
-          return (
-            <div className={offsetSpacing}>
-              {blocks.map((block, i) => {
-                // A block that introduces itself with a label or heading starts
-                // a new beat with the full section gap. Continuations sit tighter.
-                const startsBeat = blockLabel(block) || blockHeading(block);
-                const spacing =
-                  i === 0 ? "" : startsBeat ? "mt-20 lg:mt-24" : "mt-10 lg:mt-12";
-                return (
-                  <div key={i} className={spacing}>
-                    <CaseBlock block={block} />
-                  </div>
-                );
-              })}
-            </div>
-          );
-        }
+        const afterBlocks = hasExperience ? study.blocks.slice(splitIdx) : [];
 
         return (
           <>
@@ -211,29 +252,6 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
               </Reveal>
             )}
 
-            {hasExperience && study.slug === "dext" && (
-              <Reveal>
-                <Container className="mt-24 lg:mt-32">
-                  <div className="mx-auto max-w-[52ch] text-center">
-                    <h2 className="display text-balance text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.15]">
-                      Now imagine making these decisions hundreds of times every
-                      quarter.
-                    </h2>
-                    <p className="mt-5 leading-relaxed text-ink-soft">
-                      You just reviewed six businesses. Many accountants manage
-                      hundreds — or even thousands — of quarterly submissions.
-                      The Making Tax Digital Dashboard was designed to reduce
-                      this cognitive effort at scale.
-                    </p>
-                    <p className="mt-3 text-sm text-ink-muted">
-                      Here&apos;s the measurable impact the product had after
-                      launch.
-                    </p>
-                  </div>
-                </Container>
-              </Reveal>
-            )}
-
             {hasExperience && study.slug === "travelex" && (
               <Reveal>
                 <Container className="mt-24 lg:mt-32">
@@ -263,34 +281,44 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
       })()}
 
       {/* Reflection ------------------------------------------------- */}
-      {study.reflection ? (
-        <Container className="mt-24 lg:mt-32">
-          <Rule className="mb-12" />
-          <div className="grid gap-x-12 gap-y-6 lg:grid-cols-[10rem_minmax(0,1fr)]">
-            <div className="lg:pt-2">
-              <Label>Reflection</Label>
-            </div>
-            <div>
-              <h2 className="display max-w-[24ch] text-balance text-3xl sm:text-4xl">
-                {study.reflection.heading}
-              </h2>
-              <div className="prose-case mt-6">
-                {study.reflection.body.map((paragraph, i) => (
-                  <p key={i}>{paragraph}</p>
-                ))}
+      <section
+        id={hasReflectionChapter ? "reflection" : undefined}
+        className={hasReflectionChapter ? "scroll-mt-20" : undefined}
+      >
+        {study.reflection ? (
+          <Container className="mt-24 lg:mt-32">
+            <Rule className="mb-12" />
+            <div className="grid gap-x-12 gap-y-6 lg:grid-cols-[10rem_minmax(0,1fr)]">
+              <div className="lg:pt-2">
+                <Label>Reflection</Label>
+              </div>
+              <div>
+                <h2 className="display max-w-[24ch] text-balance text-3xl sm:text-4xl">
+                  {study.reflection.heading}
+                </h2>
+                <div className="prose-case mt-6">
+                  {study.reflection.body.map((paragraph, i) => (
+                    <p key={i}>{paragraph}</p>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        </Container>
-      ) : null}
+          </Container>
+        ) : null}
+      </section>
+
+      {/* Completion + next project ---------------------------------- */}
+      {next && <NextProject next={next} />}
 
       {/* What's next ----------------------------------------------- */}
       <Container className="mt-16 lg:mt-20">
         <div className="flex flex-col gap-6 border-t border-rule pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-ink-soft">
-            Want to work together?
-          </p>
+          <div className="flex items-center gap-6">
+            <p className="text-sm text-ink-soft">Want to work together?</p>
+          </div>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+            {/* Share — near the end */}
+            <ShareControls title={study.title} path={`/work/${study.slug}`} />
             <a
               href={`mailto:${site.email}`}
               className="link-underline text-sm text-ink-soft transition-colors hover:text-ink"
@@ -308,7 +336,7 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
             <a
               href={site.cv}
               download
-              className="inline-flex items-center gap-2 bg-ink px-4 py-2.5 text-sm text-paper transition-colors hover:bg-accent"
+              className="inline-flex items-center gap-2 bg-ink px-4 py-2.5 text-sm text-paper transition-colors duration-300 hover:bg-accent"
             >
               Download CV
             </a>
@@ -316,34 +344,23 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
         </div>
       </Container>
 
-      {/* Prev / next ------------------------------------------------ */}
+      {/* Previous -------------------------------------------------- */}
       <Container className="mt-16 lg:mt-20">
-        <div className="grid gap-px overflow-hidden border border-rule bg-rule sm:grid-cols-2">
-          {prev ? (
+        {prev ? (
+          <div className="overflow-hidden border border-rule">
             <Link
               href={`/work/${prev.slug}`}
-              className="group bg-paper-raised px-6 py-8 transition-colors hover:bg-paper-sunk"
+              className="group block bg-paper-raised px-6 py-8 transition-colors hover:bg-paper-sunk"
             >
               <Label muted>← Previous</Label>
               <h2 className="display mt-3 text-xl transition-colors group-hover:text-accent">
                 {prev.title}
               </h2>
             </Link>
-          ) : null}
-          {next ? (
-            <Link
-              href={`/work/${next.slug}`}
-              className="group bg-paper-raised px-6 py-8 text-right transition-colors hover:bg-paper-sunk"
-            >
-              <Label muted>Next →</Label>
-              <h2 className="display mt-3 text-xl transition-colors group-hover:text-accent">
-                {next.title}
-              </h2>
-            </Link>
-          ) : null}
-        </div>
+          </div>
+        ) : null}
 
-        <div className="mt-10 text-center">
+        <div className={prev ? "mt-10 text-center" : "text-center"}>
           <Link
             href="/work"
             className="link-underline text-sm text-ink-soft transition-colors hover:text-ink"
@@ -352,6 +369,9 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
           </Link>
         </div>
       </Container>
+
+      {/* Bottom padding so the chapter bar doesn't obscure content */}
+      {chapters.length > 0 && <div className="h-14 min-[1400px]:hidden" aria-hidden="true" />}
     </article>
   );
 }

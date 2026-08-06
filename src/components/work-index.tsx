@@ -1,3 +1,4 @@
+import type React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Label, Tag } from "./primitives";
@@ -60,20 +61,42 @@ export function WorkIndex({ studies, cols = 2 }: { studies: CaseStudy[]; cols?: 
   );
 }
 
-export function StudyMeta({ study }: { study: CaseStudy }) {
-  const rows = [
-    { term: "Role", value: study.role },
-    study.period ? { term: "Period", value: study.period } : null,
-  ].filter(Boolean) as { term: string; value: string }[];
+type MetaRow = { key: string; term: string; content: React.ReactNode };
+
+export function StudyMeta({
+  study,
+  readTimeContent,
+}: {
+  study: CaseStudy;
+  /** Pass a <ReadingTimeStatus> client node here so StudyMeta stays server-rendered. */
+  readTimeContent?: React.ReactNode;
+}) {
+  const rows: MetaRow[] = [
+    { key: "role", term: "Role", content: study.role },
+    ...(study.period
+      ? [{ key: "period", term: "Period", content: study.period }]
+      : []),
+    ...(readTimeContent
+      ? [{ key: "readtime", term: "", content: readTimeContent }]
+      : []),
+  ];
+
+  const cols = rows.length >= 3 ? "sm:grid-cols-3" : "sm:grid-cols-2";
 
   return (
-    <dl className="grid gap-px overflow-hidden border border-rule bg-rule sm:grid-cols-2">
+    <dl
+      className={`grid gap-px overflow-hidden border border-rule bg-rule ${cols}`}
+    >
       {rows.map((row) => (
-        <div key={row.term} className="bg-paper-raised px-5 py-4">
-          <dt>
-            <Label muted>{row.term}</Label>
-          </dt>
-          <dd className="mt-2 text-sm leading-relaxed text-ink-soft">{row.value}</dd>
+        <div key={row.key} className="bg-paper-raised px-5 py-4">
+          {row.term ? (
+            <dt>
+              <Label muted>{row.term}</Label>
+            </dt>
+          ) : null}
+          <dd className={`text-sm leading-relaxed text-ink-soft${row.term ? " mt-2" : ""}`}>
+            {row.content}
+          </dd>
         </div>
       ))}
     </dl>

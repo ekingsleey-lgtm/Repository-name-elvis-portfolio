@@ -144,7 +144,7 @@ export default function Home() {
                 <div className="relative">
                   <Label>{kfc.tags[0]}</Label>
                   <blockquote className="display mt-4 max-w-[28ch] text-[clamp(1.35rem,1.9vw,1.65rem)] italic leading-[1.3]">
-                    "Reward Sharing wasn't a feature. It was a new behaviour."
+                    &ldquo;Reward Sharing wasn&rsquo;t a feature. It was a new behaviour.&rdquo;
                   </blockquote>
                   <p className="mt-5 max-w-[34ch] text-sm leading-relaxed text-ink-soft">
                     {kfc.title}

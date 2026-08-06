@@ -479,3 +479,62 @@ html {
     min-height: 320px;
   }
 }
+
+/* ── Snake game touch controls ─────────────────────────────────────────────── */
+
+/* Hint text: desktop shows keyboard hint, touch shows swipe hint.
+   CSS-only so no hydration mismatch on SSR. */
+.snake-hint-desktop { display: block; }
+.snake-hint-touch   { display: none; }
+
+@media (pointer: coarse) {
+  .snake-hint-desktop { display: none; }
+  .snake-hint-touch   { display: block; }
+}
+
+/* D-pad wrapper — hidden on fine-pointer (mouse) devices.
+   On touch devices it sits below the canvas as its own flex row, separated by
+   a hairline rule. The card grows to accommodate it via snake-flip-active. */
+.snake-dpad-wrap {
+  display: none;
+}
+
+@media (pointer: coarse) {
+  .snake-dpad-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0 12px;
+    border-top: 1px solid var(--rule);
+    flex-shrink: 0;
+  }
+
+  /* Cross-shaped grid: three equal 44px columns and rows.
+     Centre cell in the left/right row is empty, forming a + shape. */
+  .snake-dpad {
+    display: grid;
+    grid-template-areas:
+      ". up ."
+      "left . right"
+      ". down .";
+    grid-template-columns: 44px 44px 44px;
+    grid-template-rows: 44px 44px 44px;
+    gap: 4px;
+  }
+}
+
+/* On mobile, grow the flip card when the game is active so the canvas and
+   D-pad both have comfortable space. The dead state class already handles
+   its own expansion; this targets the start/playing states. */
+@media (max-width: 639px) {
+  .snake-flip-active {
+    min-height: 390px;
+  }
+}
+
+/* Reduced motion: skip the active-state transition on D-pad buttons */
+@media (prefers-reduced-motion: reduce) {
+  .snake-dpad button {
+    transition: none !important;
+  }
+}

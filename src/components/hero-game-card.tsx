@@ -27,7 +27,7 @@ export function HeroGameCard() {
       {/* ── Flip card ── */}
       <div style={{ perspective: "1400px" }}>
         <div
-          className={isDead ? "snake-flip-dead" : ""}
+          className={[isDead ? "snake-flip-dead" : "", flipped ? "snake-flip-active" : ""].filter(Boolean).join(" ")}
           style={{
             position: "relative",
             transformStyle: "preserve-3d",

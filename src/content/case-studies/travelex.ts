@@ -5,8 +5,8 @@ export const travelex: CaseStudy = {
   index: "03",
   shortTitle: "Travelex",
   title: "Travelex Digital Transformation — Scalable B2B & B2C Checkout",
-  pageHeading: "Creating shared understanding for a complex platform transformation",
-  subtitle: "B2B2C foreign exchange platform design for Travelex and Sainsbury's.",
+  pageHeading: "Designing the alignment that made a stalled transformation move",
+  subtitle: "Designing the discovery, service blueprint and checkout experience for Travelex's B2B2C white-label platform in partnership with Sainsbury's UK.",
   role: "Senior Product Designer",
   period: "8 months",
   tags: ["Systems Thinking", "Stakeholder Alignment", "Platform Design"],
@@ -39,7 +39,7 @@ export const travelex: CaseStudy = {
     // ── Business Context ─────────────────────────────────────────────────────
     {
       type: "prose",
-      label: "Business Context",
+      label: "Overview",
       heading: "A business model under competitive pressure",
       body: [
         "Travelex is one of the world's largest foreign exchange businesses. Its retail model operates through travelex.co.uk, a network of airport stores, and a B2B partner ecosystem in which major UK retailers — including Sainsbury's, its largest partner — embed the Travelex travel money service inside their own customer experience under a white-label arrangement.",
@@ -372,6 +372,10 @@ export const travelex: CaseStudy = {
 
     // ── Outcome ──────────────────────────────────────────────────────────────
     {
+      type: "statement",
+      body: "When I joined, the programme was not moving. When I left, it was.",
+    },
+    {
       type: "cards",
       label: "Outcome",
       heading: "What the programme could now do",
@@ -403,6 +407,16 @@ export const travelex: CaseStudy = {
   ],
 
   interactiveSplitBefore: "Delivery",
+  chapters: [
+    { id: "context",        label: "Overview",   blockLabel: "Overview" },
+    { id: "challenge",      label: "Challenge",  blockLabel: "The challenge" },
+    { id: "discovery",      label: "Discovery",  blockLabel: "Discovery" },
+    { id: "blueprint",      label: "Blueprint",  blockLabel: "Service Blueprint" },
+    { id: "delivery",       label: "Delivery",   blockLabel: "Delivery" },
+    { id: "prioritisation", label: "Priorities", blockLabel: "Prioritisation" },
+    { id: "outcome",        label: "Impact",     blockLabel: "Outcome" },
+    { id: "reflection",     label: "Reflection", blockLabel: "_reflection" },
+  ],
 
   reflection: {
     heading:

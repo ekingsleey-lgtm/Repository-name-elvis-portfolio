@@ -187,4 +187,11 @@ export type CaseStudy = {
    * Delivery → Experience → Impact → Reflection.
    */
   interactiveSplitBefore?: string;
+  /**
+   * Named chapters for the sticky chapter nav and deep-link anchors.
+   * `blockLabel` matches the `label` field on the first block of that chapter.
+   * The special value "_reflection" anchors to the reflection section.
+   * IDs must be stable, URL-safe slugs — changing them breaks shared links.
+   */
+  chapters?: { id: string; label: string; blockLabel: string }[];
 };

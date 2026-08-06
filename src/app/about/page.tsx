@@ -30,7 +30,7 @@ export default function AboutPage() {
             <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
               <a
                 href={`mailto:${site.email}`}
-                className="inline-flex items-center gap-2 bg-ink px-6 py-3.5 text-sm text-paper transition-colors hover:bg-accent"
+                className="inline-flex items-center gap-2 bg-ink px-6 py-3.5 text-sm text-paper transition-colors duration-300 hover:bg-accent"
               >
                 Get in touch
                 <span aria-hidden="true">→</span>
@@ -177,7 +177,7 @@ export default function AboutPage() {
             </p>
             <a
               href={`mailto:${site.email}`}
-              className="mt-8 inline-flex items-center gap-2 bg-ink px-6 py-3.5 text-sm text-paper transition-colors hover:bg-accent"
+              className="mt-8 inline-flex items-center gap-2 bg-ink px-6 py-3.5 text-sm text-paper transition-colors duration-300 hover:bg-accent"
             >
               Send me an email
               <span aria-hidden="true">→</span>

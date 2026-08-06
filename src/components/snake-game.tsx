@@ -5,6 +5,7 @@ import { useEffect, useRef, useCallback, useState } from "react";
 const CELL = 26;
 const SPEED_INIT = 145;
 const SPEED_MIN = 62;
+const SWIPE_THRESHOLD = 15; // px — ignore accidental micro-swipes
 
 type Pt = { x: number; y: number };
 type Dir = 0 | 1 | 2 | 3; // UP RIGHT DOWN LEFT
@@ -190,23 +191,74 @@ function GhostBtn({ onClick, children }: { onClick: () => void; children: React.
   );
 }
 
+// ── D-pad button ─────────────────────────────────────────────────────────────
+
+function DpadBtn({
+  dir, label, children, onDir,
+}: {
+  dir: Dir; label: string; children: React.ReactNode; onDir: (d: Dir) => void;
+}) {
+  const [active, setActive] = useState(false);
+  return (
+    <button
+      aria-label={label}
+      onClick={() => onDir(dir)}
+      onPointerDown={() => setActive(true)}
+      onPointerUp={() => setActive(false)}
+      onPointerLeave={() => setActive(false)}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "44px",
+        height: "44px",
+        fontFamily: "var(--font-plex-mono),'IBM Plex Mono',monospace",
+        fontSize: "14px",
+        color: active ? "var(--accent)" : "var(--ink-muted)",
+        background: active ? "var(--paper-sunk)" : "var(--paper-raised)",
+        border: `1px solid ${active ? "var(--accent)" : "var(--rule)"}`,
+        borderRadius: "4px",
+        cursor: "pointer",
+        transition: "color 0.1s, border-color 0.1s, background 0.1s",
+        touchAction: "none",
+        userSelect: "none",
+      }}
+    >
+      {children}
+    </button>
+  );
+}
+
 // ── Main component ───────────────────────────────────────────────────────────
 
 export function SnakeGame({ active, onDead }: { active: boolean; onDead?: () => void }) {
   const cvRef = useRef<HTMLCanvasElement>(null);
+  const boardRef = useRef<HTMLDivElement>(null);
   const gsRef = useRef<GS | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [phase, setPhase] = useState<"start" | "playing" | "dead">("start");
   const [finalScore, setFinalScore] = useState(0);
 
+  // Stable ref so touch/keyboard handlers never see a stale phase value
+  const phaseRef = useRef(phase);
+  useEffect(() => { phaseRef.current = phase; }, [phase]);
+
   const syncCanvas = useCallback(() => {
     const cv = cvRef.current;
-    if (!cv || !cv.parentElement) return { cols: 0, rows: 0 };
-    const w = cv.parentElement.clientWidth;
-    const h = cv.parentElement.clientHeight;
+    const board = boardRef.current;
+    if (!cv || !board) return { cols: 0, rows: 0 };
+    const w = board.clientWidth;
+    const h = board.clientHeight;
     if (cv.width !== w) cv.width = w;
     if (cv.height !== h) cv.height = h;
     return { cols: Math.floor(w / CELL), rows: Math.floor(h / CELL) };
+  }, []);
+
+  // Shared direction input handler — prevents 180-degree reversal
+  const queueDir = useCallback((dir: Dir) => {
+    const gs = gsRef.current;
+    if (!gs || phaseRef.current !== "playing") return;
+    if (dir !== OPP[gs.dir]) gs.queued = dir;
   }, []);
 
   const startGame = useCallback(() => {
@@ -256,7 +308,7 @@ export function SnakeGame({ active, onDead }: { active: boolean; onDead?: () => 
 
     render(cv, gs);
     timerRef.current = setTimeout(() => tickRef.current(), gs.speed);
-  }, []);
+  }, [onDead]);
 
   useEffect(() => {
     if (phase === "playing" && active) {
@@ -291,6 +343,7 @@ export function SnakeGame({ active, onDead }: { active: boolean; onDead?: () => 
     hints.forEach((p) => { if (p.x < cols && p.y < rows) drawDiamond(ctx, p); });
   }, [phase, active, syncCanvas]);
 
+  // Keyboard controls — desktop
   useEffect(() => {
     if (!active) return;
     const MAP: Record<string, Dir> = {
@@ -310,6 +363,55 @@ export function SnakeGame({ active, onDead }: { active: boolean; onDead?: () => 
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [active]);
+
+  // Swipe gesture controls — attached to the board div so only swipes inside
+  // the game canvas area trigger direction changes. touchmove is non-passive
+  // so we can call preventDefault only when a qualifying swipe is in progress,
+  // preventing scroll without globally disabling it.
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+  useEffect(() => {
+    const board = boardRef.current;
+    if (!active || !board) return;
+
+    const onTouchStart = (e: TouchEvent) => {
+      const t = e.touches[0];
+      touchStartRef.current = { x: t.clientX, y: t.clientY };
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (phaseRef.current !== "playing" || !touchStartRef.current) return;
+      const t = e.touches[0];
+      const dx = t.clientX - touchStartRef.current.x;
+      const dy = t.clientY - touchStartRef.current.y;
+      // Only block scroll once the gesture exceeds the threshold
+      if (Math.max(Math.abs(dx), Math.abs(dy)) > SWIPE_THRESHOLD) {
+        e.preventDefault();
+      }
+    };
+
+    const onTouchEnd = (e: TouchEvent) => {
+      const start = touchStartRef.current;
+      touchStartRef.current = null;
+      if (!start) return;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - start.x;
+      const dy = t.clientY - start.y;
+      const adx = Math.abs(dx);
+      const ady = Math.abs(dy);
+      if (Math.max(adx, ady) < SWIPE_THRESHOLD) return;
+      queueDir(adx > ady ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
+    };
+
+    board.addEventListener("touchstart", onTouchStart, { passive: true });
+    board.addEventListener("touchmove", onTouchMove, { passive: false });
+    board.addEventListener("touchend", onTouchEnd, { passive: true });
+
+    return () => {
+      board.removeEventListener("touchstart", onTouchStart);
+      board.removeEventListener("touchmove", onTouchMove);
+      board.removeEventListener("touchend", onTouchEnd);
+    };
+  }, [active, queueDir]);
 
   // Shared overlay style — paper background with strong opacity so the canvas
   // is visible but secondary to the prompt/result text
@@ -337,23 +439,30 @@ export function SnakeGame({ active, onDead }: { active: boolean; onDead?: () => 
   };
 
   return (
-    <div style={{ position: "relative", width: "100%", height: "100%", background: "var(--paper)" }}>
-      {/* Canvas layer — overflow clipped here so game visuals never spill */}
-      <div style={{ position: "absolute", inset: 0, overflow: "hidden" }}>
-        <canvas ref={cvRef} style={{ display: "block", width: "100%", height: "100%" }} />
+    <div style={{ display: "flex", flexDirection: "column", width: "100%", height: "100%", background: "var(--paper)" }}>
+      {/* Canvas area — grows to fill available height; overflow clipped here */}
+      <div ref={boardRef} style={{ flex: 1, position: "relative", overflow: "hidden" }}>
+        <canvas ref={cvRef} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", display: "block" }} />
 
         {phase === "start" && (
           <div style={overlay}>
             <p style={monoSmall}>Eat the decision points to grow</p>
             <GhostBtn onClick={startGame}>Start game</GhostBtn>
-            <p style={{ ...monoSmall, fontSize: "9px", color: "var(--ink-faint)" }}>Arrow keys or WASD</p>
+            {/* Desktop hint — hidden on coarse-pointer devices via CSS */}
+            <p style={{ ...monoSmall, fontSize: "9px", color: "var(--ink-faint)" }} className="snake-hint-desktop">
+              Arrow keys or WASD
+            </p>
+            {/* Touch hint — shown only on coarse-pointer devices via CSS */}
+            <p style={{ ...monoSmall, fontSize: "9px", color: "var(--ink-faint)" }} className="snake-hint-touch">
+              Swipe or use the controls
+            </p>
           </div>
         )}
       </div>
 
-      {/* Dead state — sibling of the canvas layer, not clipped, fills the grown container */}
+      {/* Dead state — absolute so it covers both the canvas and the D-pad area */}
       {phase === "dead" && (
-        <div style={overlay}>
+        <div style={{ ...overlay, position: "absolute", inset: 0 }}>
           <p style={displayHead}>Game over</p>
           <p style={monoSmall}>Score — {finalScore}</p>
           <p style={{ ...monoSmall, color: "var(--ink-muted)", maxWidth: "22ch", textAlign: "center", lineHeight: 1.8 }}>
@@ -384,6 +493,57 @@ export function SnakeGame({ active, onDead }: { active: boolean; onDead?: () => 
           </a>
         </div>
       )}
+
+      {/* D-pad — shown below the canvas on touch devices (hidden when dead since
+          the dead overlay covers the card and the buttons serve no purpose). */}
+      {phase !== "dead" && (
+        <div className="snake-dpad-wrap" role="group" aria-label="Direction controls">
+          <div className="snake-dpad">
+            {/* Row 1: Up */}
+            <div style={{ gridArea: "up", display: "flex", justifyContent: "center" }}>
+              <DpadBtn dir={0} label="Move up" onDir={queueDir}>
+                <ArrowIcon direction="up" />
+              </DpadBtn>
+            </div>
+            {/* Row 2: Left · [empty] · Right */}
+            <div style={{ gridArea: "left", display: "flex", justifyContent: "flex-end" }}>
+              <DpadBtn dir={3} label="Move left" onDir={queueDir}>
+                <ArrowIcon direction="left" />
+              </DpadBtn>
+            </div>
+            <div style={{ gridArea: "right", display: "flex", justifyContent: "flex-start" }}>
+              <DpadBtn dir={1} label="Move right" onDir={queueDir}>
+                <ArrowIcon direction="right" />
+              </DpadBtn>
+            </div>
+            {/* Row 3: Down */}
+            <div style={{ gridArea: "down", display: "flex", justifyContent: "center" }}>
+              <DpadBtn dir={2} label="Move down" onDir={queueDir}>
+                <ArrowIcon direction="down" />
+              </DpadBtn>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
+  );
+}
+
+// ── Arrow icon — SVG so it scales cleanly at any DPR ─────────────────────────
+
+function ArrowIcon({ direction }: { direction: "up" | "right" | "down" | "left" }) {
+  const rotate = { up: 0, right: 90, down: 180, left: 270 }[direction];
+  return (
+    <svg
+      width="16" height="16" viewBox="0 0 16 16"
+      fill="none" aria-hidden="true"
+      style={{ transform: `rotate(${rotate}deg)`, flexShrink: 0 }}
+    >
+      <path
+        d="M8 3L8 13M8 3L4 7M8 3L12 7"
+        stroke="currentColor" strokeWidth="1.5"
+        strokeLinecap="round" strokeLinejoin="round"
+      />
+    </svg>
   );
 }

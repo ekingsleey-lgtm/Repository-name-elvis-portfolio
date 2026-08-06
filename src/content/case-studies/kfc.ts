@@ -20,6 +20,11 @@ export const kfc: CaseStudy = {
   role: "Senior Product Designer",
   period: "4 months",
   tags: ["Behavioural Design", "Habit Formation", "Technical Constraints"],
+  thumbnail: {
+    src: "/work/kfc/kfc-hero.jpg",
+    alt: "KFC Rewards Arcade campaign — neon arcade key art with KFC Rewards branding",
+    dims: { w: 1900, h: 725 },
+  },
   heroComposition: "kfc-phones",
   cover: {
     src: "/work/kfc/hero-devices.png",
@@ -379,4 +384,13 @@ export const kfc: CaseStudy = {
     ],
   },
   interactiveSplitBefore: "Measuring success",
+  chapters: [
+    { id: "overview",   label: "Overview",   blockLabel: "Overview" },
+    { id: "challenge",  label: "Challenge",  blockLabel: "The challenge" },
+    { id: "discovery",  label: "Discovery",  blockLabel: "Discovery" },
+    { id: "design",     label: "Design",     blockLabel: "Wireframes" },
+    { id: "validation", label: "Validation", blockLabel: "Validation" },
+    { id: "impact",     label: "Impact",     blockLabel: "Measuring success" },
+    { id: "reflection", label: "Reflection", blockLabel: "_reflection" },
+  ],
 };

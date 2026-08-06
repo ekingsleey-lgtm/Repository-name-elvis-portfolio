@@ -453,78 +453,6 @@ function CardSkeleton({ index }: { index: number }) {
   );
 }
 
-/* ─── Experience completion cue ─────────────────────────────── */
-
-function ExperienceCompletionCue({
-  visible,
-  title,
-  body,
-}: {
-  visible: boolean;
-  title: string;
-  body: string;
-}) {
-  return (
-    <div
-      aria-live="polite"
-      style={{
-        marginTop: "2.5rem",
-        paddingTop: "2rem",
-        borderTop: "1px solid var(--rule)",
-        textAlign: "center",
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(14px)",
-        transition:
-          "opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1)",
-      }}
-    >
-      <span
-        className="label"
-        style={{ color: "var(--success)", display: "block", marginBottom: "0.625rem" }}
-      >
-        ✓ {title}
-      </span>
-      <p
-        style={{
-          fontSize: "0.9375rem",
-          lineHeight: 1.65,
-          color: "var(--ink-soft)",
-          maxWidth: "34ch",
-          margin: "0 auto",
-        }}
-      >
-        {body}
-      </p>
-      <div
-        style={{
-          marginTop: "1.5rem",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "0.375rem",
-        }}
-      >
-        <span className="label label-muted" style={{ fontSize: "0.5625rem" }}>
-          Continue reading
-        </span>
-        <span
-          aria-hidden="true"
-          style={{
-            display: "block",
-            fontSize: "1rem",
-            color: "var(--ink-faint)",
-            animation: visible
-              ? "exp-arrow-bounce 1.8s ease-in-out 0.8s infinite"
-              : "none",
-          }}
-        >
-          ↓
-        </span>
-      </div>
-    </div>
-  );
-}
-
 /* ─── Forced light-mode tokens for the product window ────────── */
 
 const LIGHT: Record<string, string> = {
@@ -608,6 +536,12 @@ export function DextChallenge() {
     setTimeout(() => setCompletionVisible(true), 3200);
   }, [allClassified]);
 
+  const handleContinue = useCallback(() => {
+    const section = document.querySelector('[aria-labelledby="dext-exp-heading"]');
+    const next = section?.nextElementSibling as HTMLElement | null;
+    if (next) next.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+
   const correctCount = clients.filter(
     (c) => choices[c.id] === (c.isReady ? "ready" : "attention"),
   ).length;
@@ -632,40 +566,31 @@ export function DextChallenge() {
   };
 
   return (
-    <section aria-labelledby="challenge-heading" className="mt-20 lg:mt-28">
-      {/* Full-width cool slate band wrapping the entire experience */}
-      <div
-        className="full-bleed"
-        style={{
-          backgroundColor: "var(--band-dext)",
-          paddingTop: "4.5rem",
-          paddingBottom: "4.5rem",
-        }}
-      >
+    <section aria-labelledby="dext-exp-heading" className="mt-20 lg:mt-28">
         {/* ── Section intro ── */}
         <Container>
           <Rule className="mb-12 lg:mb-14" />
           <div className="mx-auto max-w-[52ch] text-center">
             <Label muted className="mb-3 block">Interactive Experience</Label>
             <h2
-              id="challenge-heading"
+              id="dext-exp-heading"
               className="display text-balance text-[clamp(1.75rem,3.5vw,2.75rem)] leading-[1.1]"
             >
-              You&apos;ve seen the solution.
+              You&apos;ve read the challenge.
               <br />
-              <em className="italic text-accent">Now step into the accountant&apos;s shoes.</em>
+              <em className="italic text-accent">Now experience the pressure.</em>
             </h2>
             <p className="mt-6 leading-relaxed text-ink-soft">
-              Spend 20 seconds experiencing the operational challenge the Making
-              Tax Digital Dashboard was designed to simplify.
+              Step into a simplified practice view and decide which clients are
+              ready to submit and which need attention.
             </p>
-            <p className="mt-3 text-sm text-ink-muted">
-              Classify each of the six clients below, then check your answers.
+            <p className="mt-2 text-sm text-ink-muted">
+              This takes around 30 seconds.
             </p>
           </div>
         </Container>
 
-        {/* ── Product window — forced light-mode regardless of OS preference ── */}
+        {/* ── Product window — forced Dext light-mode regardless of OS preference ── */}
         <div
           ref={windowRef}
           className="full-bleed"
@@ -961,30 +886,54 @@ export function DextChallenge() {
                   </p>
                 </div>
 
+                {/* ── Insight bridge ── */}
+                <div
+                  style={{
+                    marginTop: 24,
+                    paddingTop: 20,
+                    borderTop: "1px solid var(--rule)",
+                    opacity: completionVisible ? 1 : 0,
+                    transform: completionVisible ? "translateY(0)" : "translateY(10px)",
+                    transition: "opacity 0.55s cubic-bezier(0.16,1,0.3,1), transform 0.55s 0.06s cubic-bezier(0.16,1,0.3,1)",
+                  }}
+                >
+                  <span style={{ ...monoStyle, color: "var(--success)", display: "block", marginBottom: 10 }}>
+                    ✓ Insight unlocked
+                  </span>
+                  <p style={{ fontSize: "0.875rem", lineHeight: 1.65, color: "var(--ink-soft)", maxWidth: "40ch" }}>
+                    You&apos;ve experienced the pressure of deciding where to focus first.
+                  </p>
+                  <p style={{ marginTop: 6, fontSize: "0.875rem", lineHeight: 1.65, color: "var(--ink-soft)", maxWidth: "40ch" }}>
+                    The rest of this case study shows how those decisions shaped the dashboard.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={handleContinue}
+                    style={{
+                      marginTop: 18,
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 6,
+                      background: "none",
+                      border: "none",
+                      padding: 0,
+                      cursor: "pointer",
+                      fontFamily: "inherit",
+                      fontSize: "0.8125rem",
+                      letterSpacing: "0.03em",
+                      fontWeight: 500,
+                      color: "var(--ink)",
+                    }}
+                  >
+                    Continue reading <span aria-hidden="true">↓</span>
+                  </button>
+                </div>
+
               </div>
             </div>
           </div>
         )}
         </div>
-
-        {/* ── Caption ── */}
-        <Container className="mt-5">
-          <p className="mx-auto max-w-[52ch] text-center text-sm text-ink-muted">
-            Six businesses. Thirty seconds. Many accountants manage hundreds — every quarter,
-            four times a year.
-          </p>
-        </Container>
-
-        {/* ── Completion state ── */}
-        <Container>
-          <ExperienceCompletionCue
-            visible={completionVisible}
-            title="Insight unlocked"
-            body="See how these findings shaped the final product."
-          />
-        </Container>
-
-      </div>
     </section>
   );
 }

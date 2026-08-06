@@ -341,6 +341,16 @@ export const guardian: CaseStudy = {
     },
   ],
 
+  chapters: [
+    { id: "overview",      label: "Overview",      blockLabel: "Overview" },
+    { id: "strategy",      label: "Strategy",      blockLabel: "Project Strategy" },
+    { id: "research",      label: "Research",      blockLabel: "User Feedback" },
+    { id: "stakeholders",  label: "Stakeholders",  blockLabel: "Business Buy-In" },
+    { id: "design",        label: "Design",        blockLabel: "Usability Testing" },
+    { id: "delivery",      label: "Delivery",      blockLabel: "Delivery" },
+    { id: "outcome",       label: "Outcome",       blockLabel: "Outcome" },
+    { id: "reflection",    label: "Reflection",    blockLabel: "_reflection" },
+  ],
   reflection: {
     heading: "Data-driven decision-making at the heart of it",
     body: [
