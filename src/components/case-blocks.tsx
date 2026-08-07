@@ -615,7 +615,7 @@ export function CaseBlock({ block }: { block: Block }) {
                   rel="noreferrer"
                   className="label label-muted transition-colors hover:text-ink"
                 >
-                  Open in Figma ↗
+                  Open prototype ↗
                 </a>
               </figcaption>
             </figure>

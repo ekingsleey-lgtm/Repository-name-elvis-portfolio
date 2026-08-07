@@ -317,7 +317,7 @@ export const kfc: CaseStudy = {
       type: "figmaEmbed",
       label: "Reusable pattern",
       heading: "A pattern designed to teach, then disappear",
-      body: "I designed the explainer as a reusable pattern for unfamiliar KFC experiences, rather than a one-off Reward Sharing screen.",
+      body: "I designed the explainer as a reusable pattern for unfamiliar KFC experiences, rather than a one-off Reward Sharing screen. After validation, I added the new elements to KFC's Figma design system so they could be reused across future experiences.",
       embedUrl:
         "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FLM6oYL0en38Kvzl877kub0%2FReward-sharing-KFC%3Fnode-id%3D1603-9700%26scaling%3Dmin-zoom%26content-scaling%3Dfixed%26starting-point-node-id%3D1603%253A9700%26page-id%3D1120%253A9594%26hide-ui%3D1",
       fallbackUrl:
