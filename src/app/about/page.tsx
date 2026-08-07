@@ -83,14 +83,17 @@ export default function AboutPage() {
             </p>
           </div>
           <div>
-            <Label muted>Tools I use</Label>
-            <ul className="mt-4 flex flex-wrap gap-2">
-              {about.aiNative.tools.map((tool) => (
-                <li key={tool}>
-                  <Tag>{tool}</Tag>
-                </li>
-              ))}
-            </ul>
+            <Label muted>How this portfolio was built</Label>
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              {about.aiNative.workflow.flatMap((step, i) =>
+                i === 0
+                  ? [<Tag key={step}>{step}</Tag>]
+                  : [
+                      <span key={`arrow-${i}`} className="text-sm text-ink-muted select-none" aria-hidden="true">→</span>,
+                      <Tag key={step}>{step}</Tag>,
+                    ]
+              )}
+            </div>
           </div>
         </div>
       </Container>

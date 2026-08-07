@@ -139,6 +139,23 @@ export type Block =
        * full explanation rather than a one-liner.
        */
       numbered?: boolean;
+    }
+  /**
+   * An embedded Figma prototype. Renders an iframe for the interactive
+   * prototype with a fallback link for when embedding is restricted.
+   */
+  | {
+      type: "figmaEmbed";
+      label?: string;
+      heading?: string;
+      /** Single paragraph of supporting copy shown above the embed. */
+      body?: string;
+      /** The Figma proto URL used as the iframe src (clean, with hide-ui=1). */
+      embedUrl: string;
+      /** Original Figma share URL — used for the fallback open-in-Figma link. */
+      fallbackUrl: string;
+      /** Short CTA shown beneath the embed, e.g. "TRY THE PROTOTYPE →". */
+      cta?: string;
     };
 
 /**

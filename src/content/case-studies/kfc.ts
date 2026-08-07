@@ -297,7 +297,7 @@ export const kfc: CaseStudy = {
       label: "Design system",
       heading: "Building for what comes next",
       body: [
-        "As new functionality emerged, I identified opportunities to build reusable components rather than one-off solutions — personalised reward tags, status indicators, instructional banners and information cards — each designed so future loyalty features could inherit the same patterns rather than reinvent them.",
+        "As new functionality emerged, I identified opportunities to build reusable components rather than one-off solutions — personalised reward tags, status indicators, instructional banners and information cards. I added these new elements to KFC's Figma design system so future loyalty features could inherit the same patterns rather than solving the same interaction problems again.",
         "Designing at this level meant the project delivered value beyond its own release. By strengthening the foundations of KFC's design system, Reward Sharing made the next loyalty feature easier and faster to ship.",
       ],
     },
@@ -312,6 +312,17 @@ export const kfc: CaseStudy = {
           dims: { w: 1536, h: 1024 },
         },
       ],
+    },
+    {
+      type: "figmaEmbed",
+      label: "Reusable pattern",
+      heading: "A pattern designed to teach, then disappear",
+      body: "I designed the explainer as a reusable pattern for unfamiliar KFC experiences, rather than a one-off Reward Sharing screen.",
+      embedUrl:
+        "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FLM6oYL0en38Kvzl877kub0%2FReward-sharing-KFC%3Fnode-id%3D1603-9700%26scaling%3Dmin-zoom%26content-scaling%3Dfixed%26starting-point-node-id%3D1603%253A9700%26page-id%3D1120%253A9594%26hide-ui%3D1",
+      fallbackUrl:
+        "https://www.figma.com/proto/LM6oYL0en38Kvzl877kub0/Reward-sharing-KFC?node-id=1603-9700&p=f&viewport=-602%2C-211%2C0.06&t=MzCXfyMHDKQtpgEj-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=1603%3A9700&show-proto-sidebar=1&page-id=1120%3A9594",
+      cta: "TRY THE PROTOTYPE →",
     },
     {
       type: "prose",

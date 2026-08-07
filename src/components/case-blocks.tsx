@@ -570,6 +570,59 @@ export function CaseBlock({ block }: { block: Block }) {
         </Container>
       );
 
+    case "figmaEmbed":
+      return (
+        <>
+          <Container>
+            <Section label={block.label} heading={block.heading}>
+              {block.body ? (
+                <p className="leading-relaxed text-ink-soft">{block.body}</p>
+              ) : null}
+            </Section>
+          </Container>
+          <Container className="mt-8">
+            <figure>
+              <div
+                className="relative overflow-hidden border border-rule"
+                style={{
+                  height: "clamp(54rem, 90vh, 62rem)",
+                  backgroundColor: "var(--paper-raised, #f5f5f5)",
+                }}
+              >
+                {/* height extends 48px past the container so overflow:hidden clips Figma's file-info footer */}
+                <iframe
+                  src={block.embedUrl}
+                  title={block.heading ?? "Figma prototype"}
+                  allowFullScreen
+                  loading="lazy"
+                  style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "calc(100% + 48px)", border: 0 }}
+                />
+              </div>
+              <figcaption className="mt-4 flex flex-wrap items-center justify-between gap-3">
+                {block.cta ? (
+                  <a
+                    href={block.fallbackUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="label transition-colors hover:text-ink"
+                  >
+                    {block.cta}
+                  </a>
+                ) : null}
+                <a
+                  href={block.fallbackUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="label label-muted transition-colors hover:text-ink"
+                >
+                  Open in Figma ↗
+                </a>
+              </figcaption>
+            </figure>
+          </Container>
+        </>
+      );
+
     case "cards":
       return (
         <Container>

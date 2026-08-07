@@ -67,8 +67,8 @@ export const about = {
   },
   aiNative: {
     heading: "I'm an AI-native designer",
-    body: "I actively integrate AI tools into my workflow to accelerate ideation, sharpen decision-making, and prototype faster — not as a shortcut, but as part of a modern, iterative design process that connects thinking and building more tightly.",
-    tools: ["Cursor", "Claude", "Notion AI", "Replit", "Figma Make", "Figma", "FigJam", "Miro"],
+    body: "I work directly between design and implementation, using Claude to prototype, build and iterate experiences in code. This portfolio is one example — designed as a product, built in Next.js and TypeScript through an AI-assisted workflow, version-controlled in Git, deployed to production, and continuously iterated based on the live experience.",
+    workflow: ["Design", "Claude", "Next.js / TypeScript", "Git / GitHub", "Production", "Iterate"],
   },
   mentoring: {
     label: "Mentoring & education",
