@@ -11,7 +11,11 @@ export function HeroFlowchart({ className = "", onComplete }: { className?: stri
     const wrapper = wrapperRef.current;
     const svg = svgRef.current;
     if (!wrapper || !svg) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      window.matchMedia("(max-width: 1023px)").matches
+    ) {
+      gsap.set(wrapper, { opacity: 1 });
       onComplete?.();
       return;
     }

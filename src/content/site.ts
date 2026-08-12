@@ -10,7 +10,7 @@ export const site = {
   linkedin: "https://www.linkedin.com/in/elvisruxd/",
   cv: "/elvis-rimdap-cv.pdf",
   tagline:
-    "I craft products that solve real problems and scale with confidence — working at the intersection of people, strategy, and design.",
+    "I design products where the real complexity lives in the decisions behind the interface — balancing user needs, business goals and technical constraints to find the right way forward.",
   /** His own words, from the About page intro — not a written-for-him summary. */
   metaDescription:
     "Designing clear, scalable experiences for complex digital products. Focused on the detail that makes things genuinely easier to use.",

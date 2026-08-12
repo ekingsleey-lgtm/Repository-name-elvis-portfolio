@@ -25,6 +25,7 @@
   --band-kfc: #faf6ef;
   --band-dext: #f1f5f7;
   --band-travelex: #edf3f6;
+  --band-guardian: #f0ede7;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -45,6 +46,7 @@
     --band-kfc: #1c1912;
     --band-dext: #12151a;
     --band-travelex: #101520;
+    --band-guardian: #131419;
   }
 }
 
@@ -66,6 +68,7 @@
   --band-kfc: #faf6ef;
   --band-dext: #f1f5f7;
   --band-travelex: #edf3f6;
+  --band-guardian: #f0ede7;
 }
 
 :root[data-theme="dark"] {
@@ -85,6 +88,7 @@
   --band-kfc: #1c1912;
   --band-dext: #12151a;
   --band-travelex: #101520;
+  --band-guardian: #131419;
 }
 
 @theme inline {
@@ -470,6 +474,223 @@ html {
 @keyframes exp-arrow-bounce {
   0%, 100% { transform: translateY(0); }
   50%       { transform: translateY(5px); }
+}
+
+/* ── Guardian interactive experience ─────────────────────────────────────── */
+
+.gdn-exp-frames {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+@media (min-width: 640px) {
+  .gdn-exp-frames {
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+  }
+}
+
+.gdn-exp-frame-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Pill tap targets hover/focus (light-on-dark masthead) */
+.gdn-exp-nav-tap:not(:disabled):hover,
+.gdn-exp-nav-tap:not(:disabled):focus-visible {
+  background: rgba(245, 242, 236, 0.14) !important;
+  outline: 2px solid rgba(245, 242, 236, 0.65);
+  outline-offset: 2px;
+}
+
+/* Serif title tap target hover/focus */
+.gdn-exp-nav-tap--title:not(:disabled):hover,
+.gdn-exp-nav-tap--title:not(:disabled):focus-visible {
+  opacity: 0.7;
+  outline: 2px solid rgba(245, 242, 236, 0.65);
+  outline-offset: 2px;
+}
+
+/* "See how it was solved" button */
+.gdn-exp-reveal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-inter, ui-sans-serif, system-ui, sans-serif);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.gdn-exp-reveal-btn:hover,
+.gdn-exp-reveal-btn:focus-visible {
+  background: var(--accent);
+  outline: none;
+}
+
+.gdn-exp-reveal-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gdn-exp-reveal-btn {
+    transition: none;
+  }
+}
+
+/* ── Guardian priority interaction ────────────────────────────────────────── */
+
+/* Nav slot bar — previews the 3-item navigation being assembled */
+.gdn-pri-nav-bar {
+  display: flex;
+  border: 1px solid var(--rule-strong);
+  background: var(--paper-raised);
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.gdn-pri-nav-bar[data-confirmed="true"] {
+  border-color: var(--accent);
+}
+
+.gdn-pri-nav-slot {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 0.5rem;
+  min-height: 44px;
+  font-size: 0.8125rem;
+  font-family: var(--font-inter, ui-sans-serif, system-ui, sans-serif);
+  font-weight: 500;
+  color: var(--ink);
+  transition: background-color 0.25s ease, color 0.25s ease;
+  position: relative;
+}
+
+.gdn-pri-nav-slot + .gdn-pri-nav-slot {
+  border-left: 1px solid var(--rule);
+}
+
+.gdn-pri-nav-slot[data-filled="false"] {
+  color: var(--ink-faint);
+}
+
+.gdn-pri-nav-slot[data-filled="true"] {
+  background: var(--paper-raised);
+}
+
+.gdn-pri-nav-bar[data-confirmed="true"] .gdn-pri-nav-slot[data-filled="true"] {
+  color: var(--accent);
+}
+
+.gdn-pri-nav-slot-empty {
+  font-family: var(--font-plex-mono, ui-monospace, monospace);
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+}
+
+/* Item chip grid */
+.gdn-pri-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+/* Individual chip */
+.gdn-pri-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--rule-strong);
+  background: var(--paper-raised);
+  color: var(--ink);
+  font-family: var(--font-inter, ui-sans-serif, system-ui, sans-serif);
+  font-size: 0.875rem;
+  cursor: pointer;
+  border-radius: 2px;
+  min-height: 44px;
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.gdn-pri-chip:hover:not(:disabled) {
+  border-color: var(--ink);
+}
+
+.gdn-pri-chip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.gdn-pri-chip[data-selected="true"] {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.gdn-pri-chip[data-selected="true"]:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.gdn-pri-chip:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* Confirm button */
+.gdn-pri-confirm-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-inter, ui-sans-serif, system-ui, sans-serif);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+  border-radius: 2px;
+}
+
+.gdn-pri-confirm-btn:hover:not(:disabled),
+.gdn-pri-confirm-btn:focus-visible:not(:disabled) {
+  background: var(--accent);
+}
+
+.gdn-pri-confirm-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.gdn-pri-confirm-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gdn-pri-chip,
+  .gdn-pri-confirm-btn,
+  .gdn-pri-nav-slot,
+  .gdn-pri-nav-bar {
+    transition: none;
+  }
 }
 
 /* Snake game dead state — mobile only: grow card to reveal completion content.

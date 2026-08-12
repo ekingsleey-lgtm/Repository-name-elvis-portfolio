@@ -17,9 +17,9 @@ export default function Home() {
           <div>
             <Label>{site.role}</Label>
             <h1 className="display mt-6 text-[clamp(2.75rem,8vw,5.5rem)]">
-              From <Em>insight</Em>
+              The hard part
               <br />
-              to impact.
+              is never the <Em>screen</Em>.
             </h1>
             <p className="mt-8 max-w-[46ch] text-lg leading-relaxed text-ink-soft">
               {site.tagline}
@@ -226,53 +226,52 @@ export default function Home() {
           </Link>
         </Reveal>
 
-        {/* Earlier work divider */}
-        <div className="flex items-center gap-6 px-8 py-6 lg:px-12">
-          <Label muted>Earlier work</Label>
-          <span className="h-px flex-1 bg-rule" aria-hidden="true" />
-        </div>
-
-        {/* 04 — Guardian: asymmetric, editorial number as pillar + cover image */}
+        {/* 04 — Guardian: text left, image right — continues the alternating sequence */}
         <Reveal className="border-b border-rule">
           <Link href={`/work/${guardian.slug}`} className="group block">
-            <div className="grid lg:grid-cols-[auto_1fr_42fr] lg:items-stretch">
-
-              {/* Giant index — structural pillar on desktop */}
-              <div className="hidden items-center justify-center border-r border-rule px-16 lg:flex xl:px-20">
-                <span className="display tnum select-none text-[8rem] leading-none text-ink-faint xl:text-[10rem]">
-                  {guardian.index}
-                </span>
-              </div>
+            <div className="grid lg:grid-cols-[42fr_58fr]">
 
               {/* Type side */}
-              <div className="p-8 lg:p-12 xl:p-16">
-                <div className="flex items-center gap-2 lg:hidden">
-                  <Label muted>{guardian.index}</Label>
-                  <span className="h-px w-6 bg-rule" aria-hidden="true" />
-                </div>
-                <Label className="mt-1 lg:mt-0">{guardian.tags.join(" · ")}</Label>
-                <h2 className="display mt-4 text-[clamp(1.75rem,3.5vw,3rem)] leading-tight">
-                  {guardian.shortTitle}
-                </h2>
-                <p className="mt-3 max-w-[40ch] text-sm leading-relaxed text-ink-soft">
-                  {guardian.subtitle}
-                </p>
-                <span className="mt-8 inline-flex items-center gap-2 text-sm text-ink-soft">
-                  Case study
-                  <span
-                    aria-hidden="true"
-                    className="transition-transform duration-300 group-hover:translate-x-1"
-                  >→</span>
+              <div className="relative flex flex-col justify-center overflow-hidden p-6 sm:p-8 lg:min-h-[460px] lg:p-12 xl:p-16">
+                <span
+                  aria-hidden="true"
+                  className="display pointer-events-none absolute left-6 top-6 hidden select-none text-[9rem] leading-none text-ink opacity-[0.04] lg:block lg:left-10 lg:top-8 lg:text-[12rem]"
+                >
+                  {guardian.index}
                 </span>
+                <div className="relative">
+                  <Label>{guardian.tags.join(" · ")}</Label>
+                  <h2 className="display mt-4 text-[clamp(1.5rem,2.5vw,2.5rem)] leading-tight">
+                    {guardian.shortTitle}
+                  </h2>
+                  <p className="mt-3 max-w-[32ch] text-sm leading-relaxed text-ink-soft">
+                    {guardian.subtitle}
+                  </p>
+                  {guardian.heroMetrics && (
+                    <p className="display tnum mt-5 text-2xl text-accent">
+                      {guardian.heroMetrics[0].value}
+                      <span className="ml-2 font-sans text-base font-normal text-ink-muted">
+                        {guardian.heroMetrics[0].caption}
+                      </span>
+                    </p>
+                  )}
+                  <span className="mt-8 inline-flex items-center gap-2 text-sm text-ink-soft">
+                    Case study
+                    <span
+                      aria-hidden="true"
+                      className="transition-transform duration-300 group-hover:translate-x-1"
+                    >→</span>
+                  </span>
+                </div>
               </div>
 
-              {/* Image side — hidden on mobile previously, now restored */}
-              <div className="relative order-first aspect-video overflow-hidden bg-paper-sunk lg:aspect-auto lg:border-l lg:border-rule lg:order-last">
+              {/* Image side — appears first on mobile */}
+              <div className="relative order-first aspect-video overflow-hidden bg-paper-sunk lg:aspect-auto lg:order-last">
                 <Image
                   src="/work/guardian/guardian-hero.jpg"
                   alt={guardian.cover!.alt}
                   fill
-                  sizes="(min-width: 1024px) 42vw, 100vw"
+                  sizes="(min-width: 1024px) 58vw, 100vw"
                   className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.025]"
                 />
               </div>

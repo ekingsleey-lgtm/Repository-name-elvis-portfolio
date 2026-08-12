@@ -39,9 +39,10 @@ export function SiteHeader() {
             <a
               href={site.cv}
               download
-              className="hidden text-sm text-ink-soft transition-colors hover:text-ink sm:inline link-underline"
+              className="text-sm text-ink-soft transition-colors hover:text-ink link-underline"
             >
-              Download CV
+              <span className="sm:hidden">CV</span>
+              <span className="hidden sm:inline">Download CV</span>
             </a>
             <ThemeToggle />
           </nav>

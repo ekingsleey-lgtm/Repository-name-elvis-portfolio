@@ -7,7 +7,7 @@ interface Props {
 }
 
 /**
- * Shows "N min read" initially, then switches to "N min remaining" after the
+ * Shows "N min" initially, then switches to "N min remaining" after the
  * reader has scrolled past ~5% of the article. Runs its own rAF-throttled
  * scroll listener so the server-rendered StudyMeta can stay a server component.
  *
@@ -15,7 +15,7 @@ interface Props {
  * there is no hydration mismatch.
  */
 export function ReadingTimeStatus({ readTime }: Props) {
-  const [text, setText] = useState(`${readTime} min read`);
+  const [text, setText] = useState(`${readTime} min`);
 
   useEffect(() => {
     let rafId: number;
@@ -33,7 +33,7 @@ export function ReadingTimeStatus({ readTime }: Props) {
           : 0;
 
       if (progress < 0.05) {
-        setText(`${readTime} min read`);
+        setText(`${readTime} min`);
       } else {
         const rawRemaining = readTime * (1 - progress);
         if (rawRemaining < 1) {

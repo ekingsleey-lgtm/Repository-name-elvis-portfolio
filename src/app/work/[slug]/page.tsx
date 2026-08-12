@@ -11,6 +11,7 @@ import { KfcHeroComposition } from "@/components/kfc-hero";
 import { DextChallenge } from "@/components/dext-challenge";
 import { KfcExperience } from "@/components/kfc-experience";
 import { TravelexExperience } from "@/components/travelex-experience";
+import { GuardianExperience } from "@/components/guardian-experience";
 import { ChapterNav } from "@/components/chapter-nav";
 import { ShareControls } from "@/components/share-controls";
 import { ProgressBar } from "@/components/progress-bar";
@@ -227,6 +228,7 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
             {study.slug === "kfc" ? <KfcExperience /> : null}
             {study.slug === "dext" ? <DextChallenge /> : null}
             {study.slug === "travelex" ? <TravelexExperience /> : null}
+            {study.slug === "guardian" ? <GuardianExperience /> : null}
 
             {/* Bridge from experience to Impact */}
             {hasExperience && study.slug === "kfc" && (
@@ -273,6 +275,7 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
                 </Container>
               </Reveal>
             )}
+
 
             {/* Blocks after the interactive experience (Impact, Reflection lead-in…) */}
             {afterBlocks.length > 0 && renderBlocks(afterBlocks, "mt-16 lg:mt-20")}

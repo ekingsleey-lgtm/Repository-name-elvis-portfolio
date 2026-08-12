@@ -77,7 +77,7 @@ export function StudyMeta({
       ? [{ key: "period", term: "Period", content: study.period }]
       : []),
     ...(readTimeContent
-      ? [{ key: "readtime", term: "", content: readTimeContent }]
+      ? [{ key: "readtime", term: "READ TIME", content: readTimeContent }]
       : []),
   ];
 
