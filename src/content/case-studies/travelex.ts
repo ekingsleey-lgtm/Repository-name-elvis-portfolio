@@ -164,6 +164,10 @@ export const travelex: CaseStudy = {
       ],
     },
     {
+      type: "statement",
+      body: "The blueprint didn't resolve the disagreements. It located them — and locating a disagreement turned out to be most of the work.",
+    },
+    {
       type: "prose",
       body: [
         "What changed when the blueprint existed was the quality of the conversations. Before it, scope discussions were abstract — teams were debating requirements without a shared map of where those requirements sat in the overall system. With the blueprint in the room, disagreements became locatable. A question about account login could be pointed to a specific stage in the customer journey and a specific configuration requirement in the partner layer. Decisions that had been stuck became unstuck — not because the blueprint resolved the disagreement, but because it gave the disagreement a precise location.",

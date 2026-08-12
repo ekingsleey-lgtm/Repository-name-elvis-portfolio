@@ -94,6 +94,13 @@ export default function AboutPage() {
                     ]
               )}
             </div>
+            <Link
+              href="/work/dext#dext-exp-heading"
+              className="link-underline mt-5 inline-flex items-center gap-1.5 text-sm text-ink-soft transition-colors hover:text-ink"
+            >
+              See it in practice
+              <span aria-hidden="true">→</span>
+            </Link>
           </div>
         </div>
       </Container>

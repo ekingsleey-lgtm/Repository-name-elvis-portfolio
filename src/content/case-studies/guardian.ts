@@ -49,7 +49,7 @@ export const guardian: CaseStudy = {
     {
       type: "prose",
       body: [
-        "Navigation was identified as the intervention point. As the sole designer embedded in the Revenue team — working alongside Product, Engineering, Commercial/Subscriptions, Editorial and Data & Analytics — As the sole designer in the Revenue team, I owned the navigation redesign.",
+        "Navigation was identified as the intervention point. As the sole designer embedded in the Revenue team — working alongside Product, Engineering, Commercial/Subscriptions, Editorial and Data & Analytics — I owned the navigation redesign.",
       ],
     },
 
