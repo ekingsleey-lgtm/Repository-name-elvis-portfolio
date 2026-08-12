@@ -609,7 +609,7 @@ export function TravelexExperience() {
   const activeLayerData = LAYERS.find((l) => l.id === activeLayer) ?? null;
 
   return (
-    <section aria-labelledby="tx-exp-heading" className="mt-20 lg:mt-28">
+    <section id="interactive-experience" aria-labelledby="tx-exp-heading" className="mt-20 scroll-mt-20 lg:mt-28">
       {/* Full-width soft blue-grey band wrapping the entire experience */}
       <div
         className="full-bleed"

@@ -337,7 +337,7 @@ export function GuardianExperience() {
   const interpretation = phase === "confirmed" ? getInterpretation(selection) : null;
 
   return (
-    <section aria-labelledby="gdn-pri-heading" className="mt-20 lg:mt-28">
+    <section id="interactive-experience" aria-labelledby="gdn-pri-heading" className="mt-20 scroll-mt-20 lg:mt-28">
       <div
         className="full-bleed"
         style={{

@@ -566,7 +566,7 @@ export function DextChallenge() {
   };
 
   return (
-    <section aria-labelledby="dext-exp-heading" className="mt-20 lg:mt-28">
+    <section id="interactive-experience" aria-labelledby="dext-exp-heading" className="mt-20 scroll-mt-20 lg:mt-28">
         {/* ── Section intro ── */}
         <Container>
           <Rule className="mb-12 lg:mb-14" />

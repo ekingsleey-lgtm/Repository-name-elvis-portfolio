@@ -73,7 +73,7 @@ export default function AboutPage() {
 
       {/* AI-native -------------------------------------------------- */}
       <Container className="mt-14 lg:mt-28">
-        <div className="grid gap-x-16 gap-y-8 border border-rule bg-paper-raised p-8 sm:p-12 lg:grid-cols-2">
+        <div id="ai-workflow" className="grid scroll-mt-24 gap-x-16 gap-y-8 border border-rule bg-paper-raised p-8 sm:p-12 lg:grid-cols-2">
           <div>
             <h2 className="display text-balance text-3xl">
               I&rsquo;m an <Em>AI-native</Em> designer
@@ -94,13 +94,30 @@ export default function AboutPage() {
                     ]
               )}
             </div>
-            <Link
-              href="/work/dext#dext-exp-heading"
-              className="link-underline mt-5 inline-flex items-center gap-1.5 text-sm text-ink-soft transition-colors hover:text-ink"
-            >
-              See it in practice
-              <span aria-hidden="true">→</span>
-            </Link>
+          <Rule className="mt-4 mb-3" />
+            <Label muted>See it in practice</Label>
+            <ul className="mt-3 space-y-1">
+              {[
+                { href: "/work/dext#interactive-experience",     company: "Dext",     desc: "MTD dashboard simulation" },
+                { href: "/work/kfc#interactive-experience",      company: "KFC",      desc: "rewards behaviour interaction" },
+                { href: "/work/travelex#interactive-experience", company: "Travelex", desc: "connected journeys interaction" },
+                { href: "/work/guardian#interactive-experience", company: "Guardian", desc: "navigation decision interaction" },
+              ].map(({ href, company, desc }) => (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className="group link-underline text-sm text-ink"
+                  >
+                    <span className="font-medium">{company}</span>
+                    <span className="text-ink-muted transition-colors group-hover:text-ink-soft"> — {desc}</span>
+                    <span
+                      className="ml-1 inline-block text-ink-muted transition-transform duration-300 group-hover:translate-x-1 group-hover:text-ink-soft"
+                      aria-hidden="true"
+                    >→</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </Container>

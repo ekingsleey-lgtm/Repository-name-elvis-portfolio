@@ -277,6 +277,18 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
             )}
 
 
+            {/* Back to AI workflow — quiet return link for readers who arrived from About */}
+            {hasExperience && (
+              <Container className="mt-8">
+                <Link
+                  href="/about#ai-workflow"
+                  className="link-underline text-sm text-ink-soft transition-colors hover:text-ink"
+                >
+                  ← Back to AI workflow
+                </Link>
+              </Container>
+            )}
+
             {/* Blocks after the interactive experience (Impact, Reflection lead-in…) */}
             {afterBlocks.length > 0 && renderBlocks(afterBlocks, "mt-16 lg:mt-20")}
           </>

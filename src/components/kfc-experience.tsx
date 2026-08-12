@@ -1089,7 +1089,7 @@ export function KfcExperience() {
   }, []);
 
   return (
-    <section aria-labelledby="kfc-exp-heading" className="mt-20 lg:mt-28">
+    <section id="interactive-experience" aria-labelledby="kfc-exp-heading" className="mt-20 scroll-mt-20 lg:mt-28">
       {/* Full-width warm cream band wrapping the entire experience */}
       <div
         className="full-bleed"
