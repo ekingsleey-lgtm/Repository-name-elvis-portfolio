@@ -273,6 +273,15 @@ html {
   }
 }
 
+/* When JavaScript is unavailable, IntersectionObserver never fires so
+   .reveal[data-shown] is never set. Reveal content immediately visible. */
+@media (scripting: none) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Dext Challenge interactive section -------------------------------- */
 
 /* Cards lift subtly on hover — only before answers are revealed. */

@@ -17,7 +17,7 @@ export const dext: CaseStudy = {
     { value: "4", caption: "Quarterly submissions per client" },
   ],
   cover: {
-    src: "/work/dext/hmrc-hero.jpg",
+    src: "/work/dext/hmrc-hero.webp",
     alt: "HMRC 'Making Tax Digital for Income Tax — one year to go' campaign image, showing a professional working at a laptop",
     caption: "The countdown that reframed the work — a fixed deadline every UK accounting practice could feel coming.",
     width: "full",
@@ -357,50 +357,41 @@ export const dext: CaseStudy = {
     {
       type: "metrics",
       label: "Business impact",
-      heading: "Creating value beyond the design team",
+      heading: "Adopted at scale",
       body: [
-        "More than 42,153 client records were managed through the dashboard, helping practices prepare for Making Tax Digital at scale.",
+        "Following launch, accounting practices began using the dashboard to manage real MTD obligations at scale. Across eligible partner practices, uptake reached 47%.",
       ],
       metrics: [
-        { value: "47%", caption: "Usage across eligible partner practices" },
         { value: "65%", caption: "Adoption among existing users" },
+        { value: "42,153", caption: "Client records managed through the dashboard" },
       ],
     },
     {
       type: "prose",
       body: [
-        "The feature became a key talking point in product demonstrations, including at Accountex, where Sales used it to showcase Dext's readiness for upcoming regulatory change. Customer Success incorporated it into onboarding conversations and educational webinars, helping firms understand how Dext could simplify quarterly compliance.",
+        "The dashboard became part of how other teams at Dext worked with accounting practices. Customer Success incorporated it into onboarding conversations and educational webinars, helping firms understand how to manage quarterly compliance using Dext. The feature was used in Sales demonstrations and presented at Accountex as evidence of Dext's readiness for the regulatory change ahead.",
       ],
     },
     {
       type: "imagePair",
-      label: "Recognition",
+      label: "Beyond the product team",
       scale: "quiet",
       bleed: true,
       noBorder: true,
       primary: {
-        src: "/work/dext/recognition-slack.webp",
-        alt: "Internal Slack #kudos thread praising the Solo team for delivering the MTD work, with dozens of reactions",
-        caption: "Partners noticed — internal recognition for the team behind the dashboard.",
-        width: "wide",
-        dims: { w: 2106, h: 1320 },
-      },
-      secondary: {
         src: "/work/dext/recognition-marketing.webp",
-        alt: "Dext marketing video thumbnail featuring the MTD IT Dashboard as a headline capability",
-        caption: "…and it left the product — the dashboard became a marketed feature.",
+        alt: "Dext educational video thumbnail featuring the MTD IT Dashboard, presented by a Product Domain Expert — showing the dashboard's Overdue filter in use",
+        caption: "The dashboard as a Customer Success resource — featured in a dedicated Dext educational video to help accounting practices understand and prepare for quarterly compliance.",
         width: "wide",
         dims: { w: 2371, h: 1329 },
       },
-    },
-    {
-      type: "prose",
-      label: "Collaboration",
-      heading: "Designing through influence rather than ownership",
-      body: [
-        "Looking back, one of the aspects I'm most proud of wasn't the interface itself. It was the way Design became a facilitator for better decision-making across the team.",
-        "By involving stakeholders early, facilitating workshops and grounding conversations in customer evidence, decisions became faster, priorities clearer and trade-offs easier to navigate — even against evolving requirements and a fixed regulatory deadline.",
-      ],
+      secondary: {
+        src: "/work/dext/recognition-slack.webp",
+        alt: "Internal Slack #kudos thread in which a senior stakeholder describes Solo as the leading product on the market for handling quarterly updates, with @elvis.rimdap tagged among the team",
+        caption: "A senior stakeholder described Solo as 'the leading product on the market for handling quarterly updates,' noting that partners were happy and clients continued to be added.",
+        width: "wide",
+        dims: { w: 2106, h: 1320 },
+      },
     },
   ],
   interactiveSplitBefore: "Three constraints",
@@ -417,7 +408,7 @@ export const dext: CaseStudy = {
   reflection: {
     heading: "Great product design aligns people around the right problem",
     body: [
-      "Making Tax Digital challenged me to think beyond interface design. Because the future workflow didn't yet exist, success depended on combining user research, domain expertise, strategic thinking and close collaboration to anticipate problems before customers experienced them.",
+      "Making Tax Digital challenged me to think beyond interface design. Because the future workflow didn't yet exist, success depended on combining user research, domain expertise, strategic thinking and close collaboration to anticipate problems before customers experienced them. Looking back, one of the things I'm most proud of wasn't the interface itself — it was using Design to create a shared understanding of the problem across Product, Engineering and the wider business.",
       "Three lessons stayed with me: alignment is often more valuable than speed; evidence transforms stakeholder conversations from subjective opinion into evidence-based decision-making; and in products where error carries real consequences, prioritise error reduction over elegance.",
       "Great product design isn't measured by the number of screens produced. It's measured by how effectively it helps teams make better decisions and enables customers to achieve their goals with confidence.",
     ],

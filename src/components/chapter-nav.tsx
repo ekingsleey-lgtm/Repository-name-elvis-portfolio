@@ -52,8 +52,16 @@ export function ChapterNav({ chapters }: { chapters: Chapter[] }) {
     return () => document.removeEventListener("keydown", onKey);
   }, [mobileOpen]);
 
-  const handleMobileChapterClick = useCallback(() => {
-    setMobileOpen(false);
+  // Instant scroll to a chapter target, preserving URL hash and scroll-margin offsets.
+  // Prevents the anchor's default smooth-scroll (inherited from html { scroll-behavior: smooth })
+  // without touching the global setting, so the rest of the site is unaffected.
+  const handleChapterJump = useCallback((e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const target = document.getElementById(id);
+    if (target) {
+      target.scrollIntoView({ behavior: "instant" });
+    }
+    history.pushState(null, "", `#${id}`);
   }, []);
 
   if (chapters.length === 0) return null;
@@ -96,6 +104,7 @@ export function ChapterNav({ chapters }: { chapters: Chapter[] }) {
                 key={ch.id}
                 href={`#${ch.id}`}
                 aria-current={active ? "true" : undefined}
+                onClick={(e) => handleChapterJump(e, ch.id)}
                 className={[
                   "group relative block py-0.5 pl-3 label leading-tight transition-colors duration-150",
                   active
@@ -150,7 +159,7 @@ export function ChapterNav({ chapters }: { chapters: Chapter[] }) {
                   key={ch.id}
                   href={`#${ch.id}`}
                   aria-current={i === activeIdx ? "page" : undefined}
-                  onClick={handleMobileChapterClick}
+                  onClick={(e) => { setMobileOpen(false); handleChapterJump(e, ch.id); }}
                   className={[
                     "flex items-center gap-3 py-2.5 rounded-sm transition-colors",
                     i === activeIdx ? "text-ink" : "text-ink-soft hover:text-ink",
