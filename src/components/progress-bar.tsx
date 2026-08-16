@@ -47,7 +47,9 @@ export function ProgressBar({ caseStudy }: { caseStudy: string }) {
             });
           }
         }
-        if (pct >= 100 && !firedRef.current.has(100)) {
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const atEnd = progress >= 1 || (scrollable > 0 && scrollY >= scrollable - 2);
+        if (atEnd && !firedRef.current.has(100)) {
           firedRef.current.add(100);
           posthog.capture("case_study_completed", { case_study: caseStudy });
         }
