@@ -111,14 +111,20 @@
   --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 }
 
+/* clip (not hidden) on both html and body so full-bleed breakout can't cause
+   sideways scroll. clip does not establish a BFC, so position: sticky on the
+   header is unaffected. Applied to html as well as body because body { clip }
+   alone does not prevent the html element from scrolling horizontally. */
+html {
+  overflow-x: clip;
+}
+
 body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  /* clip (not hidden) so full-bleed breakout can't cause sideways scroll,
-     while leaving position: sticky on the header unaffected. */
   overflow-x: clip;
 }
 
@@ -172,6 +178,26 @@ body {
   width: 100vw;
   margin-left: 50%;
   transform: translateX(-50%);
+}
+
+/* Case-study chapter-nav rail — visual evidence only.
+   At ≥1400px (the breakpoint where the desktop chapter nav appears), large
+   evidence artefacts begin at x = 9rem (144px), clearing the 112px nav right
+   edge while extending freely to the right viewport edge.
+   Heroes and interactive-experience bands are deliberately excluded (they do
+   not carry the chapter-rail-media class). Below 1400px: no effect. */
+@media (min-width: 1400px) {
+  /* Full-viewport evidence (width: "full", imagePair bleed) */
+  .chapter-rail-media.full-bleed {
+    width: calc(100vw - 9rem);
+    transform: translateX(calc(9rem - 50vw));
+  }
+
+  /* Wide-container evidence (width: "bleed"): override the container's
+     lg:px-12 left padding so content begins at the rail edge. */
+  .chapter-rail-media:not(.full-bleed) {
+    padding-left: 9rem;
+  }
 }
 
 /* Scroll-reveal — a single, quiet lift into place. The reduced-motion global

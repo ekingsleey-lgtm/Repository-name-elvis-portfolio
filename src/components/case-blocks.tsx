@@ -235,12 +235,12 @@ export function CaseBlock({ block }: { block: Block }) {
           <>
             {Intro}
             <figure className={intro ? "mt-8" : ""}>
-              <div className="full-bleed">
+              <div className="full-bleed chapter-rail-media">
                 <AssetImage
                   src={single.src}
                   alt={single.alt}
                   dims={single.dims}
-                  sizes="100vw"
+                  sizes="(min-width: 1400px) calc(100vw - 9rem), 100vw"
                   priority={single.priority}
                 />
               </div>
@@ -284,7 +284,7 @@ export function CaseBlock({ block }: { block: Block }) {
           {Intro}
           <Container
             size={bleed ? "wide" : "default"}
-            className={intro ? "mt-8" : ""}
+            className={`${intro ? "mt-8" : ""} ${bleed ? "chapter-rail-media" : ""}`}
           >
             <div
               className={`grid gap-6 ${pair ? "sm:grid-cols-2" : ""} ${
@@ -374,7 +374,7 @@ export function CaseBlock({ block }: { block: Block }) {
             </Container>
           ) : null}
           {bleed ? (
-            <div className={`full-bleed px-6 sm:px-10 lg:px-16 ${intro ? "mt-10" : ""}`}>
+            <div className={`full-bleed chapter-rail-media px-6 sm:px-10 lg:px-16 min-[1400px]:pl-0 ${intro ? "mt-10" : ""}`}>
               {pairInner}
             </div>
           ) : (

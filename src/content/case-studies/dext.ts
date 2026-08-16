@@ -373,25 +373,29 @@ export const dext: CaseStudy = {
       ],
     },
     {
-      type: "imagePair",
+      type: "figures",
       label: "Beyond the product team",
-      scale: "quiet",
-      bleed: true,
-      noBorder: true,
-      primary: {
-        src: "/work/dext/recognition-marketing.webp",
-        alt: "Dext educational video thumbnail featuring the MTD IT Dashboard, presented by a Product Domain Expert — showing the dashboard's Overdue filter in use",
-        caption: "The dashboard as a Customer Success resource — featured in a dedicated Dext educational video to help accounting practices understand and prepare for quarterly compliance.",
-        width: "wide",
-        dims: { w: 2371, h: 1329 },
-      },
-      secondary: {
-        src: "/work/dext/recognition-slack.webp",
-        alt: "Internal Slack #kudos thread in which a senior stakeholder describes Solo as the leading product on the market for handling quarterly updates, with @elvis.rimdap tagged among the team",
-        caption: "A senior stakeholder described Solo as 'the leading product on the market for handling quarterly updates,' noting that partners were happy and clients continued to be added.",
-        width: "wide",
-        dims: { w: 2106, h: 1320 },
-      },
+      figures: [
+        {
+          src: "/work/dext/recognition-marketing.webp",
+          alt: "Dext educational video thumbnail featuring the MTD IT Dashboard, presented by a Product Domain Expert — showing the dashboard's Overdue filter in use",
+          caption: "The dashboard as a Customer Success resource — featured in a dedicated Dext educational video to help accounting practices understand and prepare for quarterly compliance.",
+          width: "bleed",
+          dims: { w: 2371, h: 1329 },
+        },
+      ],
+    },
+    {
+      type: "figures",
+      figures: [
+        {
+          src: "/work/dext/recognition-slack.webp",
+          alt: "Internal Slack #kudos thread in which a senior stakeholder describes Solo as the leading product on the market for handling quarterly updates, with @elvis.rimdap tagged among the team",
+          caption: "A senior stakeholder described Solo as 'the leading product on the market for handling quarterly updates,' noting that partners were happy and clients continued to be added.",
+          width: "bleed",
+          dims: { w: 2106, h: 1320 },
+        },
+      ],
     },
   ],
   interactiveSplitBefore: "Three constraints",
