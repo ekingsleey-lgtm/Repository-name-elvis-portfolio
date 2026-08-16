@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Container, Label, Em } from "@/components/primitives";
+import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { HeroGameCard } from "@/components/hero-game-card";
 import { Reveal } from "@/components/reveal";
 import { caseStudies } from "@/content/case-studies";
@@ -32,12 +33,13 @@ export default function Home() {
                 View my work
                 <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
               </Link>
-              <a
+              <TrackedLink
                 href={`mailto:${site.email}`}
+                event="email_clicked"
                 className="link-underline text-sm text-ink-soft transition-colors duration-300 hover:text-ink"
               >
                 Get in touch
-              </a>
+              </TrackedLink>
             </div>
 
           </div>
@@ -339,8 +341,9 @@ export default function Home() {
               working on something at the intersection of strategy, behaviour,
               and technical constraint — I&rsquo;d like to hear about it.
             </p>
-            <a
+            <TrackedLink
               href={`mailto:${site.email}`}
+              event="email_clicked"
               className="group link-underline display mt-8 inline-flex items-baseline gap-3 text-[clamp(1.5rem,4vw,3rem)] text-ink transition-colors duration-300 hover:text-accent"
             >
               {site.email}
@@ -348,23 +351,25 @@ export default function Home() {
                 aria-hidden="true"
                 className="text-xl transition-transform duration-300 group-hover:translate-x-1"
               >→</span>
-            </a>
+            </TrackedLink>
             <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3">
-              <a
+              <TrackedLink
                 href={site.linkedin}
                 target="_blank"
                 rel="noreferrer"
+                event="linkedin_clicked"
                 className="link-underline text-sm text-ink-soft transition-colors duration-300 hover:text-ink"
               >
                 LinkedIn
-              </a>
-              <a
+              </TrackedLink>
+              <TrackedLink
                 href={site.cv}
-                download
+                download=""
+                event="cv_downloaded"
                 className="link-underline text-sm text-ink-soft transition-colors duration-300 hover:text-ink"
               >
                 Download CV
-              </a>
+              </TrackedLink>
             </div>
           </Reveal>
         </div>

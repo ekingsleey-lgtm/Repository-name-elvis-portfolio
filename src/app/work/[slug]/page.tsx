@@ -15,6 +15,7 @@ import { GuardianExperience } from "@/components/guardian-experience";
 import { ChapterNav } from "@/components/chapter-nav";
 import { ShareControls } from "@/components/share-controls";
 import { ProgressBar } from "@/components/progress-bar";
+import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { ReadingTimeStatus } from "@/components/reading-time-status";
 import { NextProject } from "@/components/next-project";
 import { estimateReadingTime, chapterReadTimes } from "@/lib/reading-time";
@@ -99,7 +100,7 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
   return (
     <article>
       {/* Reading progress bar — fixed beneath header, tracks article scroll */}
-      <ProgressBar />
+      <ProgressBar caseStudy={study.slug} />
 
       {/* Chapter nav (fixed — renders outside the flow) */}
       {chapters.length > 0 && <ChapterNav chapters={chapters} />}
@@ -334,27 +335,30 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
             {/* Share — near the end */}
             <ShareControls title={study.title} path={`/work/${study.slug}`} />
-            <a
+            <TrackedLink
               href={`mailto:${site.email}`}
+              event="email_clicked"
               className="link-underline text-sm text-ink-soft transition-colors hover:text-ink"
             >
               {site.email}
-            </a>
-            <a
+            </TrackedLink>
+            <TrackedLink
               href={site.linkedin}
               target="_blank"
               rel="noreferrer"
+              event="linkedin_clicked"
               className="link-underline text-sm text-ink-soft transition-colors hover:text-ink"
             >
               LinkedIn
-            </a>
-            <a
+            </TrackedLink>
+            <TrackedLink
               href={site.cv}
-              download
+              download=""
+              event="cv_downloaded"
               className="inline-flex items-center gap-2 bg-ink px-4 py-2.5 text-sm text-paper transition-colors duration-300 hover:bg-accent"
             >
               Download CV
-            </a>
+            </TrackedLink>
           </div>
         </div>
       </Container>

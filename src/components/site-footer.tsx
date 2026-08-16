@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Container, Label } from "./primitives";
+import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { site } from "@/content/site";
 
 export function SiteFooter() {
@@ -17,33 +18,36 @@ export function SiteFooter() {
           </div>
 
           <nav aria-label="Elsewhere" className="flex flex-wrap gap-x-8 gap-y-3">
-            <a
+            <TrackedLink
               href={site.linkedin}
               target="_blank"
               rel="noreferrer"
+              event="linkedin_clicked"
               className="link-underline text-sm text-ink-soft transition-colors duration-300 hover:text-ink"
             >
               LinkedIn
-            </a>
-            <a
+            </TrackedLink>
+            <TrackedLink
               href={`mailto:${site.email}`}
+              event="email_clicked"
               className="link-underline text-sm text-ink-soft transition-colors duration-300 hover:text-ink"
             >
               Email
-            </a>
+            </TrackedLink>
             <Link
               href="/work"
               className="link-underline text-sm text-ink-soft transition-colors duration-300 hover:text-ink"
             >
               Work
             </Link>
-            <a
+            <TrackedLink
               href={site.cv}
-              download
+              download=""
+              event="cv_downloaded"
               className="link-underline text-sm text-ink-soft transition-colors duration-300 hover:text-ink"
             >
               Download CV
-            </a>
+            </TrackedLink>
           </nav>
         </div>
 
