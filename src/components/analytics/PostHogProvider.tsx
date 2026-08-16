@@ -20,6 +20,13 @@ if (key && typeof window !== "undefined") {
     person_profiles: "never",
     disable_surveys: true,
   });
+
+  // Internal-user opt-out: if __ph_internal is set in this browser's localStorage
+  // (set manually via console on elvisdesigns.online), suppress all capture.
+  // Normal visitors never have this key; their behaviour is unchanged.
+  if (localStorage.getItem("__ph_internal") === "1") {
+    posthog.opt_out_capturing();
+  }
 }
 
 export function PostHogProvider({ children }: { children: ReactNode }) {
