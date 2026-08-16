@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Container, Label, Em, Rule, Tag } from "@/components/primitives";
 import { AssetImage } from "@/components/asset-image";
+import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { site, about } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -28,13 +29,14 @@ export default function AboutPage() {
               {about.intro}
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
-              <a
+              <TrackedLink
                 href={`mailto:${site.email}`}
+                event="email_clicked"
                 className="inline-flex items-center gap-2 bg-ink px-6 py-3.5 text-sm text-paper transition-colors duration-300 hover:bg-accent"
               >
                 Get in touch
                 <span aria-hidden="true">→</span>
-              </a>
+              </TrackedLink>
               <Link
                 href="/work"
                 className="link-underline text-sm text-ink-soft transition-colors hover:text-ink"
@@ -202,13 +204,14 @@ export default function AboutPage() {
             <p className="mt-5 max-w-[44ch] leading-relaxed text-ink-soft">
               {about.contact.body}
             </p>
-            <a
+            <TrackedLink
               href={`mailto:${site.email}`}
+              event="email_clicked"
               className="mt-8 inline-flex items-center gap-2 bg-ink px-6 py-3.5 text-sm text-paper transition-colors duration-300 hover:bg-accent"
             >
               Send me an email
               <span aria-hidden="true">→</span>
-            </a>
+            </TrackedLink>
           </div>
 
           <dl className="self-center border-t border-rule">
@@ -217,12 +220,13 @@ export default function AboutPage() {
                 <Label muted>Email</Label>
               </dt>
               <dd>
-                <a
+                <TrackedLink
                   href={`mailto:${site.email}`}
+                  event="email_clicked"
                   className="link-underline text-sm text-ink-soft transition-colors hover:text-ink"
                 >
                   {site.email}
-                </a>
+                </TrackedLink>
               </dd>
             </div>
             <div className="flex items-baseline justify-between gap-6 border-b border-rule py-4">
@@ -230,14 +234,15 @@ export default function AboutPage() {
                 <Label muted>LinkedIn</Label>
               </dt>
               <dd>
-                <a
+                <TrackedLink
                   href={site.linkedin}
                   target="_blank"
                   rel="noreferrer"
+                  event="linkedin_clicked"
                   className="link-underline text-sm text-ink-soft transition-colors hover:text-ink"
                 >
                   {site.name}
-                </a>
+                </TrackedLink>
               </dd>
             </div>
             <div className="flex items-baseline justify-between gap-6 border-b border-rule py-4">
