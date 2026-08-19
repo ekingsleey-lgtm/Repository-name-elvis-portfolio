@@ -139,12 +139,15 @@ export default function Home() {
               <div className="relative flex flex-col justify-center overflow-hidden p-6 sm:p-8 lg:min-h-[460px] lg:p-12 xl:p-16">
                 <span
                   aria-hidden="true"
-                  className="display pointer-events-none absolute left-6 top-6 hidden select-none text-[9rem] leading-none text-ink opacity-[0.04] lg:block lg:left-10 lg:top-8 lg:text-[12rem]"
+                  className="display pointer-events-none absolute -top-2 right-0 hidden select-none text-[10rem] leading-none text-ink opacity-[0.04] lg:block lg:text-[13rem]"
                 >
                   {kfc.index}
                 </span>
                 <div className="relative">
                   <Label>{kfc.tags[0]}</Label>
+                  <h2 className="display mt-4 text-[clamp(1.5rem,2.5vw,2.5rem)] leading-tight">
+                    {kfc.shortTitle}
+                  </h2>
                   <blockquote className="display mt-4 max-w-[28ch] text-[clamp(1.35rem,1.9vw,1.65rem)] italic leading-[1.3]">
                     &ldquo;Reward Sharing wasn&rsquo;t a feature. It was a new behaviour.&rdquo;
                   </blockquote>
@@ -203,12 +206,12 @@ export default function Home() {
               <div className="relative flex flex-col justify-center overflow-hidden bg-paper-sunk p-6 sm:p-8 lg:p-12 xl:p-16">
                 <span
                   aria-hidden="true"
-                  className="display pointer-events-none absolute bottom-0 right-0 hidden translate-x-4 translate-y-4 select-none text-[10rem] leading-[0.85] text-ink opacity-[0.04] lg:block"
+                  className="display pointer-events-none absolute -top-2 right-0 hidden select-none text-[10rem] leading-none text-ink opacity-[0.04] lg:block lg:text-[13rem]"
                 >
                   {travelex.index}
                 </span>
                 <div className="relative">
-                  <Label>{travelex.tags.join(" · ")}</Label>
+                  <Label>{travelex.tags[0]}</Label>
                   <h2 className="display mt-4 text-[clamp(1.5rem,2.5vw,2.5rem)] leading-tight">
                     {travelex.shortTitle}
                   </h2>
@@ -237,12 +240,12 @@ export default function Home() {
               <div className="relative flex flex-col justify-center overflow-hidden p-6 sm:p-8 lg:min-h-[460px] lg:p-12 xl:p-16">
                 <span
                   aria-hidden="true"
-                  className="display pointer-events-none absolute left-6 top-6 hidden select-none text-[9rem] leading-none text-ink opacity-[0.04] lg:block lg:left-10 lg:top-8 lg:text-[12rem]"
+                  className="display pointer-events-none absolute -top-2 right-0 hidden select-none text-[10rem] leading-none text-ink opacity-[0.04] lg:block lg:text-[13rem]"
                 >
                   {guardian.index}
                 </span>
                 <div className="relative">
-                  <Label>{guardian.tags.join(" · ")}</Label>
+                  <Label>{guardian.tags[0]}</Label>
                   <h2 className="display mt-4 text-[clamp(1.5rem,2.5vw,2.5rem)] leading-tight">
                     {guardian.shortTitle}
                   </h2>
@@ -293,6 +296,75 @@ export default function Home() {
           </Link>
         </div>
       </Container>
+
+      {/* ── Built with AI — interactive evidence index ───────────────── */}
+      <div id="built-with-ai" className="scroll-mt-20">
+      <Container className="mt-8 lg:mt-16">
+        <Reveal>
+          <div className="relative overflow-hidden border-t border-rule pt-10 lg:pt-16">
+            <span
+              aria-hidden="true"
+              className="display pointer-events-none absolute -top-2 right-0 hidden select-none text-[10rem] leading-none text-ink opacity-[0.04] lg:block lg:text-[13rem]"
+            >
+              AI
+            </span>
+            <div className="relative">
+              <Label>Built with AI</Label>
+              <h2 className="display mt-6 max-w-[26ch] text-[clamp(1.75rem,3.5vw,2.75rem)] leading-[1.1]">
+                Pressure. Behaviour. Systems. Trade-offs.
+              </h2>
+              <p className="mt-5 max-w-[52ch] leading-relaxed text-ink-soft">
+                Each case study contains a different interactive experience. I built them with AI-assisted
+                development to make the product thinking something you can experience, not just read about.
+              </p>
+            </div>
+          </div>
+        </Reveal>
+
+        <div className="mt-8 border-t border-rule">
+          {[
+            { index: "01", name: "Dext",     desc: "Classify clients under deadline pressure",     slug: "dext"     },
+            { index: "02", name: "KFC",      desc: "Experience the reward that becomes a loop",    slug: "kfc"      },
+            { index: "03", name: "Travelex", desc: "Explore a B2B2C service blueprint in layers",  slug: "travelex" },
+            { index: "04", name: "Guardian", desc: "Choose 3 nav items. See the trade-off.",       slug: "guardian" },
+          ].map((item) => (
+            <Reveal key={item.slug} className="border-b border-rule">
+              <Link
+                href={`/work/${item.slug}?from=home-ai#interactive-experience`}
+                className="group flex items-center justify-between gap-4 py-5 lg:py-6"
+              >
+                <div className="flex min-w-0 items-baseline gap-4 sm:gap-5">
+                  <Label muted className="shrink-0 tnum">{item.index}</Label>
+                  <div className="min-w-0">
+                    <span className="display text-[clamp(1rem,1.6vw,1.125rem)]">{item.name}</span>
+                    <span aria-hidden="true" className="mx-2.5 text-xs text-ink-faint">—</span>
+                    <span className="text-sm text-ink-muted transition-colors duration-300 group-hover:text-ink-soft">
+                      {item.desc}
+                    </span>
+                  </div>
+                </div>
+                <span className="hidden shrink-0 items-center gap-2 text-sm text-ink-soft sm:inline-flex">
+                  Try the experience
+                  <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                </span>
+                <span aria-hidden="true" className="shrink-0 text-sm text-ink-soft transition-transform duration-300 group-hover:translate-x-1 sm:hidden">→</span>
+              </Link>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal>
+          <div className="mt-6 lg:mt-8">
+            <Link
+              href="/about#ai-workflow"
+              className="link-underline text-sm text-ink-soft transition-colors duration-300 hover:text-ink"
+            >
+              See how I work with AI →
+            </Link>
+          </div>
+        </Reveal>
+      </Container>
+      </div>
 
       {/* ── Approach — "How I think" ──────────────────────────────────── */}
       <Container className="mt-14 lg:mt-40">

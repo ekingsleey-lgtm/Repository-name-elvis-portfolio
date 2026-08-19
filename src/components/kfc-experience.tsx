@@ -1123,10 +1123,10 @@ export function KfcExperience() {
           </div>
         </Container>
 
-        {/* ── Phone — dark inner band ── */}
+        {/* ── Phone — inner band ── */}
         <div
           style={{
-            backgroundColor: "#0e0e0e",
+            backgroundColor: "var(--paper-sunk)",
             padding: "52px 24px 56px",
             marginTop: "2.5rem",
           }}

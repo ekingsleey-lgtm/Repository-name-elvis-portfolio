@@ -2,6 +2,7 @@
 
 import type { AnchorHTMLAttributes } from "react";
 import posthog from "posthog-js";
+import { getCampaign } from "./campaign";
 
 const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
 
@@ -19,6 +20,7 @@ export function TrackedLink({ event, eventProperties, onClick, children, ...prop
         if (key) {
           posthog.capture(event, {
             source_page: window.location.pathname,
+            ...getCampaign(),
             ...eventProperties,
           });
         }

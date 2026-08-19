@@ -453,24 +453,6 @@ function CardSkeleton({ index }: { index: number }) {
   );
 }
 
-/* ─── Forced light-mode tokens for the product window ────────── */
-
-const LIGHT: Record<string, string> = {
-  "--paper": "#f5f2ec",
-  "--paper-raised": "#fbfaf8",
-  "--paper-sunk": "#ece8df",
-  "--ink": "#16181c",
-  "--ink-soft": "#3c4046",
-  "--ink-muted": "#6b6f77",
-  "--ink-faint": "#9a9ea6",
-  "--rule": "#ddd8ce",
-  "--rule-strong": "#c8c2b5",
-  "--accent": "#d8412a",
-  "--accent-soft": "#f2ddd7",
-  "--success": "#166534",
-  "--success-soft": "#dcfce7",
-};
-
 /* ─── Main component ─────────────────────────────────────────── */
 
 export function DextChallenge() {
@@ -590,12 +572,11 @@ export function DextChallenge() {
           </div>
         </Container>
 
-        {/* ── Product window — forced Dext light-mode regardless of OS preference ── */}
+        {/* ── Product window ── */}
         <div
           ref={windowRef}
           className="full-bleed"
           style={{
-            ...(LIGHT as React.CSSProperties),
             backgroundColor: "var(--paper)",
             color: "var(--ink)",
             borderTop: "1px solid var(--rule-strong)",
@@ -763,7 +744,7 @@ export function DextChallenge() {
               style={{
                 position: "absolute",
                 inset: 0,
-                backgroundColor: "rgba(245, 242, 236, 0.5)",
+                backgroundColor: "color-mix(in srgb, var(--paper) 50%, transparent)",
               }}
             />
 

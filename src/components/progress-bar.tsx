@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import posthog from "posthog-js";
+import { getCampaign } from "./analytics/campaign";
 
 const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
 
@@ -12,7 +13,7 @@ export function ProgressBar({ caseStudy }: { caseStudy: string }) {
   useEffect(() => {
     firedRef.current.clear();
     if (key) {
-      posthog.capture("case_study_viewed", { case_study: caseStudy });
+      posthog.capture("case_study_viewed", { case_study: caseStudy, ...getCampaign() });
     }
   }, [caseStudy]);
 
@@ -44,6 +45,7 @@ export function ProgressBar({ caseStudy }: { caseStudy: string }) {
             posthog.capture("case_study_scroll", {
               case_study: caseStudy,
               scroll_depth: milestone,
+              ...getCampaign(),
             });
           }
         }
@@ -51,7 +53,7 @@ export function ProgressBar({ caseStudy }: { caseStudy: string }) {
         const atEnd = progress >= 1 || (scrollable > 0 && scrollY >= scrollable - 2);
         if (atEnd && !firedRef.current.has(100)) {
           firedRef.current.add(100);
-          posthog.capture("case_study_completed", { case_study: caseStudy });
+          posthog.capture("case_study_completed", { case_study: caseStudy, ...getCampaign() });
         }
       }
     };

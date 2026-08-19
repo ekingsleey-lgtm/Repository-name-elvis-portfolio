@@ -32,10 +32,10 @@ export default function AboutPage() {
               <TrackedLink
                 href={`mailto:${site.email}`}
                 event="email_clicked"
-                className="inline-flex items-center gap-2 bg-ink px-6 py-3.5 text-sm text-paper transition-colors duration-300 hover:bg-accent"
+                className="group inline-flex items-center gap-2 bg-ink px-6 py-3.5 text-sm text-paper transition-colors duration-300 hover:bg-accent"
               >
                 Get in touch
-                <span aria-hidden="true">→</span>
+                <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
               </TrackedLink>
               <Link
                 href="/work"
@@ -100,10 +100,10 @@ export default function AboutPage() {
             <Label muted>See it in practice</Label>
             <ul className="mt-3 space-y-1">
               {[
-                { href: "/work/dext#interactive-experience",     company: "Dext",     desc: "MTD dashboard simulation" },
-                { href: "/work/kfc#interactive-experience",      company: "KFC",      desc: "rewards behaviour interaction" },
-                { href: "/work/travelex#interactive-experience", company: "Travelex", desc: "connected journeys interaction" },
-                { href: "/work/guardian#interactive-experience", company: "Guardian", desc: "navigation decision interaction" },
+                { href: "/work/dext?from=about-ai#interactive-experience",     company: "Dext",     desc: "MTD dashboard simulation" },
+                { href: "/work/kfc?from=about-ai#interactive-experience",      company: "KFC",      desc: "rewards behaviour interaction" },
+                { href: "/work/travelex?from=about-ai#interactive-experience", company: "Travelex", desc: "connected journeys interaction" },
+                { href: "/work/guardian?from=about-ai#interactive-experience", company: "Guardian", desc: "navigation decision interaction" },
               ].map(({ href, company, desc }) => (
                 <li key={href}>
                   <Link
@@ -207,10 +207,10 @@ export default function AboutPage() {
             <TrackedLink
               href={`mailto:${site.email}`}
               event="email_clicked"
-              className="mt-8 inline-flex items-center gap-2 bg-ink px-6 py-3.5 text-sm text-paper transition-colors duration-300 hover:bg-accent"
+              className="group mt-8 inline-flex items-center gap-2 bg-ink px-6 py-3.5 text-sm text-paper transition-colors duration-300 hover:bg-accent"
             >
               Send me an email
-              <span aria-hidden="true">→</span>
+              <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
             </TrackedLink>
           </div>
 

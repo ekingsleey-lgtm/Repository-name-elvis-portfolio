@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Container, Label, Rule, Tag } from "@/components/primitives";
@@ -13,6 +14,7 @@ import { KfcExperience } from "@/components/kfc-experience";
 import { TravelexExperience } from "@/components/travelex-experience";
 import { GuardianExperience } from "@/components/guardian-experience";
 import { ChapterNav } from "@/components/chapter-nav";
+import { ReturnLink } from "@/components/return-link";
 import { ShareControls } from "@/components/share-controls";
 import { ProgressBar } from "@/components/progress-bar";
 import { TrackedLink } from "@/components/analytics/TrackedLink";
@@ -278,15 +280,12 @@ export default async function CaseStudyPage(props: PageProps<"/work/[slug]">) {
             )}
 
 
-            {/* Back to AI workflow — quiet return link for readers who arrived from About */}
+            {/* Contextual return link — only shown when arriving via ?from= param */}
             {hasExperience && (
               <Container className="mt-8">
-                <Link
-                  href="/about#ai-workflow"
-                  className="link-underline text-sm text-ink-soft transition-colors hover:text-ink"
-                >
-                  ← Back to AI workflow
-                </Link>
+                <Suspense fallback={null}>
+                  <ReturnLink />
+                </Suspense>
               </Container>
             )}
 
