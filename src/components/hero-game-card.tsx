@@ -1,13 +1,56 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { HeroFlowchart } from "./hero-flowchart";
 import { SnakeGame } from "./snake-game";
+import { track } from "./analytics/track";
 
 export function HeroGameCard() {
   const [buttonVisible, setButtonVisible] = useState(false);
   const [flipped, setFlipped] = useState(false);
   const [isDead, setIsDead] = useState(false);
+
+  const cardRef = useRef<HTMLDivElement>(null);
+  const snakeViewedFiredRef = useRef(false);
+
+  // Only begin observing after the card flips to show the snake face.
+  // Observing on mount would fire immediately (the container is in the viewport
+  // from first paint), setting the guard before the snake is ever visible.
+  useEffect(() => {
+    console.log("[snake_viewed] effect ran — flipped:", flipped, "| alreadyFired:", snakeViewedFiredRef.current);
+    if (!flipped || snakeViewedFiredRef.current) return;
+
+    const el = cardRef.current;
+    console.log("[snake_viewed] cardRef.current:", el, "| tagName:", el?.tagName, "| exists:", !!el);
+    if (!el) return;
+
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        console.log(
+          "[snake_viewed] IO callback — ratio:", entry?.intersectionRatio?.toFixed(3),
+          "| isIntersecting:", entry?.isIntersecting,
+          "| boundingRect:", JSON.stringify(entry?.boundingClientRect),
+          "| alreadyFired:", snakeViewedFiredRef.current,
+        );
+        if (snakeViewedFiredRef.current || !entry?.isIntersecting) return;
+        snakeViewedFiredRef.current = true;
+        console.log("[snake_viewed] guard passed — calling track()");
+        track("snake_viewed", { page: window.location.pathname });
+        console.log("[snake_viewed] track() returned");
+        obs.disconnect();
+      },
+      { threshold: 0.3 }
+    );
+
+    console.log("[snake_viewed] observer created — calling observe() on:", el.tagName, el.className || "(no class)");
+    obs.observe(el);
+    console.log("[snake_viewed] observe() called");
+
+    return () => {
+      console.log("[snake_viewed] cleanup — disconnecting observer");
+      obs.disconnect();
+    };
+  }, [flipped]);
 
   const handleAnimationComplete = useCallback(() => {
     setButtonVisible(true);
@@ -23,7 +66,7 @@ export function HeroGameCard() {
   }, []);
 
   return (
-    <div>
+    <div ref={cardRef}>
       {/* ── Flip card ── */}
       <div style={{ perspective: "1400px" }}>
         <div
