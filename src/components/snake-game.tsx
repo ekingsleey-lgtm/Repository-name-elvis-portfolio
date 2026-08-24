@@ -1,6 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useCallback, useState } from "react";
+import { track } from "./analytics/track";
+
+// Session-level high score — resets on full page reload, persists across games.
+let _sessionHighScore = -1;
 
 const CELL = 26;
 const SPEED_INIT = 145;
@@ -243,6 +247,11 @@ export function SnakeGame({ active, onDead }: { active: boolean; onDead?: () => 
   const phaseRef = useRef(phase);
   useEffect(() => { phaseRef.current = phase; }, [phase]);
 
+  // Tracks the score of the most-recently-ended game for snake_restarted
+  const lastScoreRef = useRef(0);
+  // Records when the current game started for duration_seconds
+  const gameStartTimeRef = useRef<number | null>(null);
+
   const syncCanvas = useCallback(() => {
     const cv = cvRef.current;
     const board = boardRef.current;
@@ -262,9 +271,23 @@ export function SnakeGame({ active, onDead }: { active: boolean; onDead?: () => 
   }, []);
 
   const startGame = useCallback(() => {
+    console.log("[snake_started] startGame() called — phase:", phaseRef.current);
     if (timerRef.current) { clearTimeout(timerRef.current); timerRef.current = null; }
     const { cols, rows } = syncCanvas();
-    if (!cols || !rows) return;
+    console.log("[snake_started] syncCanvas →", { cols, rows }, "| cvRef:", !!cvRef.current, "| boardRef:", !!boardRef.current);
+    if (!cols || !rows) {
+      console.log("[snake_started] BAILED — cols/rows zero, game will not start and event will not fire");
+      return;
+    }
+    // Track restart before resetting state
+    if (phaseRef.current === "dead") {
+      console.log("[snake_started] firing snake_restarted first");
+      track("snake_restarted", { previous_score: lastScoreRef.current, page: window.location.pathname });
+    }
+    console.log("[snake_started] about to call track('snake_started')");
+    track("snake_started", { page: window.location.pathname });
+    console.log("[snake_started] track('snake_started') returned");
+    gameStartTimeRef.current = Date.now();
     gsRef.current = initGS(cols, rows);
     setFinalScore(0);
     setPhase("playing");
@@ -290,7 +313,18 @@ export function SnakeGame({ active, onDead }: { active: boolean; onDead?: () => 
       gs.snake.slice(0, -1).some((s) => s.x === np.x && s.y === np.y)
     ) {
       render(cv, gs);
-      setFinalScore(gs.score);
+      const deadScore = gs.score;
+      const duration = gameStartTimeRef.current
+        ? Math.round((Date.now() - gameStartTimeRef.current) / 1000)
+        : 0;
+      lastScoreRef.current = deadScore;
+      gameStartTimeRef.current = null;
+      if (deadScore > _sessionHighScore) {
+        _sessionHighScore = deadScore;
+        track("snake_high_score", { score: deadScore, page: window.location.pathname });
+      }
+      track("snake_game_over", { score: deadScore, duration_seconds: duration, page: window.location.pathname });
+      setFinalScore(deadScore);
       setPhase("dead");
       onDead?.();
       return;
