@@ -242,7 +242,7 @@ export const dext: CaseStudy = {
           src: "/work/dext/data-tiles.webp",
           alt: "MTD for IT data tiles: Overdue Submissions 6, Submitted 39/109, Due 64/109 and Next Due Date 07 Aug 26, above All, Overdue, Submitted and Due filters and a tax-year selector",
           width: "bleed",
-          dims: { w: 2171, h: 724 },
+          dims: { w: 2171, h: 514 },
         },
       ],
     },
