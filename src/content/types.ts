@@ -26,6 +26,12 @@ export type Figure = {
   dims?: { w: number; h: number };
   /** LCP hint — set on the hero image so it isn't lazy-loaded. */
   priority?: boolean;
+  /**
+   * Below `sm`, render the figure at a fixed readable width inside its own
+   * horizontal scroller instead of shrinking it to the screen. For very wide,
+   * short artefacts whose labels become illegible at phone width.
+   */
+  mobileScroll?: boolean;
 };
 
 export type Block =
@@ -40,7 +46,19 @@ export type Block =
       /** "bullet" for unordered, "numbered" for a sequence. */
       style?: "bullet" | "numbered";
     }
-  | { type: "figures"; label?: string; heading?: string; body?: string[]; figures: Figure[] }
+  | {
+      type: "figures";
+      label?: string;
+      heading?: string;
+      body?: string[];
+      figures: Figure[];
+      /**
+       * "compare" lays two figures out as a like-for-like comparison on the
+       * wide container: side by side from `xl`, stacked below it, each keeping
+       * its full frame and caption so the pairing reads at every width.
+       */
+      layout?: "compare";
+    }
   /**
    * An intentionally asymmetric diptych — two figures at different scales with
    * a vertical offset, never a 50/50 grid. Reads as one composition (e.g. an

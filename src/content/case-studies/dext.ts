@@ -12,7 +12,7 @@ export const dext: CaseStudy = {
   period: "4 months",
   tags: ["Product & Systems Thinking", "Cross-Functional Leadership"],
   heroMetrics: [
-    { value: "65%", caption: "Adoption among existing users" },
+    { value: "65%", caption: "First-month adoption among existing Dext Solo users" },
     { value: "42,153", caption: "Clients managed through the dashboard" },
     { value: "4", caption: "Quarterly submissions per client" },
   ],
@@ -28,54 +28,27 @@ export const dext: CaseStudy = {
     {
       type: "prose",
       label: "Overview",
-      heading: "Helping accountants prepare for a future they hadn't yet experienced",
       body: [
-        "Making Tax Digital for Income Tax (MTD IT) represents one of the biggest changes to UK personal tax compliance in decades. Instead of submitting tax information annually, accountants would soon be required to file quarterly returns, increasing the volume of submissions by up to four times for every client they managed.",
-        "For accounting practices responsible for hundreds — or even thousands — of clients, this wasn't simply a regulatory update. It fundamentally changed how work would be prioritised, monitored and delivered throughout the year.",
+        "Making Tax Digital for Income Tax (MTD IT) represents one of the biggest changes to UK personal tax compliance in decades. It would change how sole traders and landlords keep records and report to HMRC. For accountants, it would turn one annual submission per client into four quarterly submissions per client.",
+        "For accountants and practices with hundreds or even thousands of clients, they needed to action at-risk clients and confidently prioritise their workload to take the right next step.",
       ],
     },
     {
-      type: "prose",
-      label: "The challenge",
-      body: [
-        "For the practices most affected by Making Tax Digital — those managing hundreds of clients — the change meant a new operating rhythm, not just a new compliance rule. New patterns of work, new sources of risk, new questions about what to prioritise each quarter.",
-        "But when we started designing, none of that workflow existed yet. The legislation hadn't come into force. Accountants could articulate what was required of them. They couldn't yet articulate what it would feel like to actually do it.",
-      ],
-    },
-    {
-      type: "statement",
-      body: "We weren't solving a problem users had already experienced — we were designing for behaviours they understood conceptually but hadn't yet developed in practice.",
-    },
-    {
-      type: "cards",
-      label: "Three constraints",
-      heading: "Solving tomorrow's problems with today's information",
-      numbered: true,
-      body: [
-        "Designing the dashboard was only half the challenge. The more difficult task was helping multiple teams align around a problem that customers themselves had not yet fully experienced.",
-        "Three constraints shaped almost every decision we made.",
-      ],
-      cards: [
-        {
-          title: "Designing for future behaviour",
-          body: "Although accountants understood that quarterly submissions were coming, very few had experienced what managing hundreds of quarterly compliance tasks would actually feel like. Traditional user research could only take us so far. We needed to combine customer insight, domain expertise and informed product judgement to anticipate where future operational pain would emerge before users could clearly articulate it themselves.",
-        },
-        {
-          title: "Balancing regulatory deadlines with customer experience",
-          body: "The HMRC implementation date was fixed. Product understandably prioritised shipping a compliant solution before legislation came into effect, while Design wanted to ensure the experience genuinely reduced operational effort for accountants. Rather than treating these as competing objectives, we identified where early compromises were acceptable and where protecting the long-term experience would ultimately drive stronger adoption.",
-        },
-        {
-          title: "Working within an evolving platform",
-          body: "Dext Solo was an established platform already used by thousands of accounting practices. Introducing entirely new interaction patterns carried technical and maintenance costs, making close collaboration with Engineering essential. Rather than designing idealised solutions in isolation, I wanted technical feasibility to influence design decisions from the earliest stages.",
-        },
+      type: "list",
+      label: "Challenges",
+      style: "bullet",
+      items: [
+        "The increase in submissions brought new and multiplying sources of risk.",
+        "We were solving a problem users had not experienced.",
+        "I was designing to a strict product release deadline driven by the governmental policy.",
+        "We were designing an addition to an existing platform, which meant adhering to platform constraints.",
       ],
     },
     {
       type: "prose",
       label: "Product strategy",
-      heading: "Reducing the cost of compliance",
       body: [
-        "Early conversations with the Product Manager revealed an important shift in perspective. The project's primary commercial objective was increasing Net Revenue Retention — encouraging existing accounting practices to adopt Dext Solo as their preferred solution for Making Tax Digital compliance.",
+        "From early conversations I had with the Product Manager, it became apparent that the initial release's primary commercial objective would be to increase Net Revenue Retention of Dext customers, making Dext Solo existing accountants’ preferred MTD compliance solution.",
       ],
     },
     {
@@ -83,18 +56,81 @@ export const dext: CaseStudy = {
       label: "The reframe",
       from: {
         label: "Instead of asking",
-        body: "How do we help accountants submit quarterly tax returns?",
+        body: "How can we help accountants submit quarterly tax returns?",
       },
       to: {
         label: "We asked",
-        body: "How might we reduce the ongoing operational effort of managing quarterly compliance across hundreds of clients?",
+        body: "How do we help practices see their workload, spot clients at risk, and decide what to tackle next?",
       },
     },
     {
       type: "prose",
       body: [
-        "This subtle shift changed the direction of the project. Rather than optimising individual submission tasks, we focused on helping practices understand their overall compliance position, identify risks earlier and confidently prioritise work across their client portfolio.",
+        "The slight reframing realigned the direction of the project. We focused on helping practices understand their overall compliance position across all clients, and direct them on what to do next rather than optimising individual submission tasks. This would enable them to identify risks earlier and confidently prioritise work across their client portfolio.",
       ],
+    },
+    {
+      type: "prose",
+      label: "Learning from the market",
+      heading: "I did a competitive analysis to discover opportunities.",
+      body: [
+        "I analysed accounting platforms and compliance products to understand how similar problems were being solved. I used a combination of AI research and competitive analysis. Some of the competitors I reviewed were Xero, FreeAgent, and QuickBooks. Outside of direct competitors, I also reviewed broader dashboard SaaS product patterns.",
+        "I noticed that none of the competitors quickly informed users of how much was in their workload. My concern was that if an accountant could not estimate their workload, they would end up in a situation where they would not complete their work by the quarterly deadline or, even worse, rush and submit it with errors. I used this finding to explore the information hierarchy.",
+      ],
+    },
+    {
+      type: "figures",
+      figures: [
+        {
+          src: "/work/dext/competitor.webp",
+          alt: "Competitive landscape mapping — Xero, QuickBooks, FreeAgent and enterprise SaaS dashboard patterns analysed side by side",
+          caption: "The competitive landscape — extensive reporting capability across every platform, but information density that made compliance risk invisible at a glance.",
+          width: "full",
+          dims: { w: 2326, h: 1060 },
+        },
+      ],
+    },
+    {
+      type: "cards",
+      label: "Design Principle",
+      heading: "Our dashboard needed to answer three questions.",
+      numbered: true,
+      body: [
+        "Our goal became helping accountants answer three simple questions within seconds instead of displaying as much information as possible.",
+      ],
+      cards: [
+        { title: "How many clients require attention?", body: "" },
+        { title: "Which clients are most at risk?", body: "" },
+        { title: "What should accountants do next?", body: "" },
+      ],
+    },
+    {
+      type: "prose",
+      body: [
+        "Throughout the project, reducing cognitive load became a guiding principle, ensuring every component earned its place without contributing to increased complexity and slower decision-making.",
+      ],
+    },
+    {
+      type: "prose",
+      label: "Cross-functional alignment",
+      heading: "Building shared ownership",
+      body: [
+        "With the goal and overall direction agreed, I facilitated a workshop to create a shared understanding of the problem space. I brought together the cross-functional team of Product, Engineering and domain experts before moving into design.",
+      ],
+    },
+    {
+      type: "list",
+      style: "bullet",
+      body: ["We focused on questions like"],
+      items: [
+        "What does success look like for accounting practices managing hundreds or thousands of clients?",
+        "Where are users most likely to make mistakes?",
+        "What problems must Version 1 solve?",
+      ],
+    },
+    {
+      type: "prose",
+      body: ["From this, the team had a shared understanding of success."],
     },
     {
       type: "figures",
@@ -111,118 +147,10 @@ export const dext: CaseStudy = {
     },
     {
       type: "prose",
-      label: "Framing the problem",
-      heading: "Aligning stakeholders before designing solutions",
-      body: [
-        "Before opening Figma, I wanted the team to agree on the problem we were solving.",
-        "Working closely with the Product Manager, I mapped delivery risks, identified technical dependencies and explored where uncertainty existed across Product, Engineering and the wider business.",
-      ],
-    },
-    {
-      type: "list",
-      style: "bullet",
-      body: ["Together we explored questions such as:"],
-      items: [
-        "Which assumptions represented the greatest delivery risk?",
-        "Which decisions required early certainty?",
-        "Which areas could safely evolve after launch?",
-        "How would the HMRC deadline influence prioritisation?",
-      ],
-    },
-    {
-      type: "prose",
-      body: [
-        "Making these trade-offs visible early helped Product make more informed roadmap decisions while giving Engineering greater confidence when estimating feasibility.",
-        "One of our earliest conversations wasn't about interface design — it was about where the new dashboard should live within Dext Solo. Resolving these questions before detailed design work began ensured the dashboard became an integrated part of the platform rather than a standalone feature.",
-      ],
-    },
-    {
-      type: "prose",
-      label: "Learning from the market",
-      heading: "Identifying opportunities through competitive research",
-      body: [
-        "Before exploring solutions, I analysed existing accounting platforms and compliance products to understand how similar problems were being solved. Using a combination of traditional competitor analysis and AI-assisted research, I reviewed products including Xero, QuickBooks and FreeAgent, alongside broader dashboard patterns used within enterprise SaaS products.",
-      ],
-    },
-    {
-      type: "figures",
-      figures: [
-        {
-          src: "/work/dext/competitor.webp",
-          alt: "Competitive landscape mapping — Xero, QuickBooks, FreeAgent and enterprise SaaS dashboard patterns analysed side by side",
-          caption: "The competitive landscape — extensive reporting capability across every platform, but information density that made compliance risk invisible at a glance.",
-          width: "full",
-          dims: { w: 2326, h: 1060 },
-        },
-      ],
-    },
-    {
-      type: "prose",
-      body: [
-        "While competitors offered extensive reporting capabilities, many relied on information-dense interfaces that required significant effort to interpret. Large tables, multiple filters and complex navigation made it difficult for users to quickly understand where their attention was needed.",
-      ],
-    },
-    {
-      type: "cards",
-      label: "Design principle",
-      heading: "The dashboard only needed to answer three questions",
-      numbered: true,
-      body: [
-        "Rather than replicating these patterns, we chose a different direction. Instead of displaying as much information as possible, our goal became helping accountants answer three simple questions within seconds:",
-      ],
-      cards: [
-        { title: "How many clients require attention?", body: "" },
-        { title: "Which clients are most at risk?", body: "" },
-        { title: "What should I do next?", body: "" },
-      ],
-    },
-    {
-      type: "prose",
-      body: [
-        "Reducing cognitive load became a guiding principle throughout the project, ensuring every component contributed to faster decision-making rather than increasing complexity.",
-      ],
-    },
-    {
-      type: "prose",
-      label: "Cross-functional alignment",
-      heading: "Building shared ownership from the beginning",
-      body: [
-        "With the overall direction agreed, I facilitated a workshop bringing together Product, Engineering and domain experts to create a shared understanding of the problem before moving into design.",
-      ],
-    },
-    {
-      type: "comparison",
-      columns: ["Team", "Optimised for"],
-      rows: [
-        ["Product", "Deadlines, roadmap & scope"],
-        ["Engineering", "Feasibility & maintainability"],
-        ["Domain experts", "Workflows & HMRC rules"],
-        ["Design", "Cognitive load & usability"],
-      ],
-    },
-    {
-      type: "list",
-      style: "bullet",
-      body: ["Rather than reviewing interface ideas, we focused on four key questions:"],
-      items: [
-        "What does success look like for accounting practices managing hundreds of clients?",
-        "Where are users most likely to make mistakes?",
-        "Which problems must Version 1 solve?",
-        "Which improvements could safely wait until future releases?",
-      ],
-    },
-    {
-      type: "prose",
-      body: [
-        "The outcome was a shared definition of success that guided every major decision throughout the project.",
-      ],
-    },
-    {
-      type: "prose",
       label: "Defining the experience",
-      heading: "Understanding how accountants think, not just what they do",
+      heading: "Understanding the mental model of accountants",
       body: [
-        "Rather than jumping straight into interface design, I wanted to understand the mental models accountants would use when reviewing large numbers of clients. If we could mirror those thought processes within the product, the dashboard would feel intuitive from the first interaction.",
+        "Before jumping into designing interfaces, I wanted to understand how accountants think, not just what they do, especially when viewing hundreds of clients. By understanding this and incorporating it into the product, the dashboard would feel like an intuitive experience.",
       ],
     },
     {
@@ -241,63 +169,107 @@ export const dext: CaseStudy = {
     {
       type: "statement",
       label: "The insight",
-      body: "Accountants rarely think about one client at a time.",
+      body: "Accountants think about multiple client types at a time",
     },
     {
       type: "prose",
       body: [
-        "Instead, they continuously switch between reviewing their overall workload, identifying high-risk clients and drilling into individual cases that require attention. The dashboard needed to support movement between summary and detail without overwhelming users with unnecessary complexity.",
+        "Separate user interviews with accountants gave us insight into their workflow. Accountants switch between reviewing their workload, identifying high-risk clients and drilling into individual cases that constantly require attention. The dashboard needed to support all of these switches in workflow without unnecessary complexity.",
       ],
     },
     {
       type: "prose",
       label: "Wireframing",
-      heading: "Translating strategy into an MVP",
+      heading: "Turning strategy into MVP",
       body: [
-        "With the customer journeys and information hierarchy agreed, I began translating the product strategy into early wireframes. Rather than focusing on visual polish, these concepts explored how accountants would move through the experience and how information could be prioritised to support quick decision-making.",
+        "The information hierarchy and customer journeys were now agreed upon, so I turned my attention to wireframes. This part of the process was not about polished designs but early concepts. I explored two ways of representing the task priority, how accountants could move through the product and how information could support quick decision-making.",
+        "Wireframing in low fidelity encouraged Product and Engineering to critique workflows rather than aesthetics, leading to better conversations around usability and behaviour.",
       ],
     },
     {
-      type: "imagePair",
-      bleed: true,
-      body: [
-        "Working in low fidelity let the team iterate quickly without becoming attached to specific interface solutions. More importantly, it encouraged Product and Engineering to critique workflows rather than aesthetics, leading to richer conversations around behaviour and usability.",
+      type: "figures",
+      figures: [
+        {
+          src: "/work/dext/wireframe-annotated.webp",
+          alt: "Annotated MVP wireframe: the dashboard mapped to related screens, with open questions called out in the margins",
+          caption: "The MVP mapped — every open question surfaced before a pixel was polished.",
+          width: "bleed",
+          dims: { w: 2500, h: 1328 },
+        },
       ],
-      primary: {
-        src: "/work/dext/wireframe-annotated.webp",
-        alt: "Annotated MVP wireframe: the dashboard mapped to related screens, with open questions called out in the margins",
-        caption: "The MVP mapped — every open question surfaced before a pixel was polished.",
-        width: "wide",
-        dims: { w: 2500, h: 1328 },
-      },
-      secondary: {
-        src: "/work/dext/dashboard-final.webp",
-        alt: "The shipped Dext MTD for IT dashboard: overdue, submitted and next-due summary above a client submission table",
-        caption: "…and shipped — the same structure, resolved.",
-        width: "wide",
-        dims: { w: 1440, h: 758 },
-      },
     },
     {
       type: "prose",
       label: "Designing with engineering",
-      heading: "Turning constraints into better decisions",
+      heading: "Better decisions through constraints",
       body: [
-        "One of the strongest aspects of this project was the close partnership between Design and Engineering. Rather than presenting finished designs for implementation, I involved engineers throughout the process so technical considerations could influence decisions before significant time had been invested.",
-        "Early discussions highlighted that nested filtering and more advanced interaction patterns would significantly increase implementation complexity and potentially delay delivery. Instead of immediately removing those ideas, we worked together to understand the customer value behind each interaction — some genuinely reduced cognitive effort and deserved investment; others added complexity without improving decision-making.",
+        "As the MTD Dashboard was an addition to the Dext Solo product, designs had to adhere to the technical constraints of Dext Solo. This meant that a close working relationship between Design and Engineering was critical to succeed.",
+        "Engineering informed me of the dependency cost of the Q1–Q4 quarter indicators, so together we chose to go with the badges. This way we retained the user benefit and avoided the extra implementation cost.",
+        "Another section of the design where this was important was the nested-row interaction patterns. Building them would significantly increase development time and delay delivery. We discussed which interaction patterns genuinely reduced cognitive effort and deserved investment and which added complexity without improving decision-making.",
+        "Through these conversations, engineering changed from reviewers to design partners.",
       ],
     },
     {
-      type: "statement",
-      label: "Shared ownership",
-      body: "These conversations transformed Engineering from reviewers into design partners.",
+      type: "figures",
+      layout: "compare",
+      figures: [
+        {
+          src: "/work/dext/nested-progress.webp",
+          alt: "Client table with nested income-source rows under each client and Q1–Q4 quarter indicators per row, coloured by status",
+          caption: "Nested client rows with Q1–Q4 quarter indicators",
+          dims: { w: 2170, h: 640 },
+        },
+        {
+          src: "/work/dext/tags.webp",
+          alt: "Flat client table with one row per quarter and a single submission status badge — Submitted, Overdue or Not Due",
+          caption: "One row per quarter with a submission status badge",
+          dims: { w: 2172, h: 724 },
+        },
+      ],
+    },
+    {
+      type: "prose",
+      label: "Releases on time versus experience",
+      heading: "Deprioritising data tiles",
+      body: [
+        "One of the biggest challenges in this project was ensuring that the experience was always considered. It was my responsibility to advocate for it in the prioritisation of the scope and release. This became crucial when discussing the data tiles at the top of the MTD Dashboard design. I designed them to help accountants with a quick overview of their work and an indication of what to action. The engineers and Product Manager wanted to drop them from the design as they believed it would take too much effort to build and could potentially delay the release.",
+      ],
+    },
+    {
+      type: "figures",
+      figures: [
+        {
+          src: "/work/dext/data-tiles.webp",
+          alt: "MTD for IT data tiles: Overdue Submissions 6, Submitted 39/109, Due 64/109 and Next Due Date 07 Aug 26, above All, Overdue, Submitted and Due filters and a tax-year selector",
+          width: "bleed",
+          dims: { w: 2171, h: 724 },
+        },
+      ],
     },
     {
       type: "prose",
       label: "Validating assumptions",
-      heading: "Testing with accountants",
+      heading: "User testing with accountants",
       body: [
-        "Because Making Tax Digital had not yet been fully implemented, validating our assumptions with real users became even more important. I organised remote guerrilla usability sessions with six accountants, using interactive prototypes to understand how they interpreted the dashboard and whether the information hierarchy supported their natural workflows.",
+        "As users had not yet tangibly experienced the effect of MTD on their workload, validating assumptions with real users was even more important. It would also give me a chance to validate the importance of the data tiles in the design. I organised remote guerrilla tests with 6 accountants. In each of the six user tests, I presented both prototypes I had quickly spun up with Claude Code: one with the data tiles and one without. The user tests allowed us to understand how accountants interpreted the dashboard and whether the information hierarchy supported their natural workflows. It also allowed me to prove the importance of the data tiles.",
+      ],
+    },
+    {
+      type: "figures",
+      layout: "compare",
+      figures: [
+        {
+          src: "/work/dext/prototype-data-tiles.webp",
+          alt: "Test prototype of the MTD for IT dashboard with four data tiles — overdue, submitted, due and next due date — above the client submissions table",
+          caption: "Prototype A: with data tiles",
+          dims: { w: 1728, h: 910 },
+        },
+        {
+          src: "/work/dext/prototype-no-data-tiles.webp",
+          alt: "Test prototype of the MTD for IT dashboard without data tiles — the status filters sit directly above the client submissions table",
+          caption: "Prototype B: without data tiles",
+          dims: { w: 1921, h: 819 },
+        },
       ],
     },
     {
@@ -307,74 +279,85 @@ export const dext: CaseStudy = {
       cards: [
         {
           title: "Accountants expected an overview first",
-          body: "Every participant instinctively searched for a high-level summary before individual client detail. In sessions where the dashboard was shown without summary tiles, every participant asked for them — providing direct evidence for the design decision that had faced the most internal debate.",
+          body: "Participants instinctively searched for a high-level summary before individual client detail. When shown the dashboard without data tiles, all six participants asked for them. This provided direct evidence for the design decision that had faced the most internal debate.",
         },
         {
           title: "Users prioritised exceptions over completion",
-          body: "Participants cared far more about identifying clients at risk than reviewing those already progressing — shifting us from progress reporting towards actionable exceptions.",
+          body: "Participants cared far more about identifying clients at risk than reviewing clients already progressing. This shifted us from progress reporting towards actionable exceptions.",
         },
         {
           title: "Simplicity increased confidence",
-          body: "With fewer competing visual elements, participants decided faster and more confidently — validating our choice to reduce density rather than add functionality.",
+          body: "Participants decided faster and more confidently with fewer competing visual elements. This validated the choice to reduce density rather than add functionality.",
         },
         {
           title: "Evidence changed the conversation",
-          body: "Debates that had relied on personal opinion became grounded in observable behaviour, making prioritisation across Product and Engineering markedly easier.",
+          body: "Up until this point, personal opinions had driven debates, but now they were grounded in observable behaviour, making prioritisation across Product, Engineering and Design easier.",
         },
       ],
     },
     {
       type: "prose",
-      label: "From testing to delivery",
-      heading: "Balancing immediate delivery with long-term product quality",
+      label: "Testing to Delivery",
+      heading: "Compromises between immediate delivery and long-term quality product experience",
       body: [
-        "One tension now dominated: the business needed a compliant solution ahead of the fixed HMRC deadline, but we wanted to avoid shipping an experience that solved today's regulatory requirement while creating tomorrow's usability problems.",
+        "Throughout the project, there was a continuous tension between meeting the HMRC deadline and releasing a product that could create experience and design debt, as well as wider usability problems, down the line. The business understandably wanted to release quickly, but I had to weigh up the cost to the experience.",
+        "As a result of this the Product Manager wanted us to drop the data tiles even though they addressed a valid need for the user. In the user testing, participants instinctively reached for the compliance overview. I used the research evidence to advocate for a representation of task overview. Working with the developers and Product Manager, we came up with a design pattern that already existed in the code base and solved the user needs.",
       ],
     },
     {
-      type: "statement",
-      label: "Version 1",
-      body: "Success wasn't about delivering every idea in Version 1 — it was the smallest set of functionality that would help practices confidently adopt the new workflow.",
-    },
-    {
-      type: "list",
-      style: "bullet",
-      body: [
-        "The testing evidence, not opinion, set the priorities. Working with the Product Manager and Engineering Lead, we weighed every feature against three questions:",
-      ],
-      items: [
-        "Does this reduce operational effort for accountants?",
-        "Is there evidence users genuinely need it?",
-        "Can it realistically be delivered within our timeline?",
+      type: "figures",
+      figures: [
+        {
+          src: "/work/dext/pie-indicator.webp",
+          alt: "Compact overview bar: submission due date 07 Feb 2026, with ring indicators for Overdue 4/20, Due 10/20 and Submitted 6/20",
+          width: "bleed",
+          dims: { w: 2170, h: 206 },
+          mobileScroll: true,
+        },
       ],
     },
     {
       type: "prose",
+      label: "Two-version release",
+      heading: "As a result of the user testing I also proposed a V1 and V2 approach.",
+      body: [],
+    },
+    {
+      type: "prose",
+      label: "Version 1",
+      heading: "Success was not releasing everything in V1",
       body: [
-        "The hardest trade-off concerned the summary tiles — the compliance overview every participant had instinctively reached for. Rather than cutting them when the timeline tightened, I used the research evidence to advocate for staged delivery: core client list in Version 1, with summary tiles committed as Version 2's first priority. Observable user behaviour, not opinion, became the deciding factor.",
+        "Version 1 was the smallest set of functionality that would help accountants and practices confidently adopt the new workflows. This would enable them to be HMRC compliant.",
+      ],
+    },
+    {
+      type: "prose",
+      label: "Version 2",
+      heading: "Long-term experience improvements",
+      body: [
+        "Version 2 was planned to introduce functionality that would improve the efficiency of completing tasks, for example, by having nested rows with the badges we would reduce cognitive load for the user making it easier to see what clients needed more attention.",
       ],
     },
     {
       type: "metrics",
       label: "Business impact",
-      heading: "Adopted at scale",
+      heading: "1st month adoption",
       body: [
-        "Following launch, accounting practices began using the dashboard to manage real MTD obligations at scale. Across eligible partner practices, uptake reached 47%.",
+        "The launch gave us the first chance to see how effective our design was. Accounting practices began using the dashboard to manage real MTD obligations at scale.",
       ],
       metrics: [
-        { value: "65%", caption: "Adoption among existing users" },
-        { value: "42,153", caption: "Client records managed through the dashboard" },
+        { value: "65%", caption: "First-month adoption among existing Dext Solo users" },
+        { value: "42,153", caption: "Clients managed through the dashboard" },
       ],
     },
     {
       type: "prose",
       body: [
-        "The dashboard became part of how other teams at Dext worked with accounting practices. Customer Success incorporated it into onboarding conversations and educational webinars, helping firms understand how to manage quarterly compliance using Dext. The feature was used in Sales demonstrations and presented at Accountex as evidence of Dext's readiness for the regulatory change ahead.",
+        "Customer Success started using the Dext Solo MTD Dashboard to market the Dext product as a whole to accountants in webinars and incorporated it into their onboarding conversations, which helped firms understand how to manage quarterly compliance using Dext. It was also used in Sales demonstrations and presented at Accountex, evidencing that Dext was ready for the regulatory change ahead.",
       ],
     },
     {
       type: "figures",
-      label: "Beyond the product team",
       figures: [
         {
           src: "/work/dext/recognition-marketing.webp",
@@ -398,23 +381,25 @@ export const dext: CaseStudy = {
       ],
     },
   ],
-  interactiveSplitBefore: "Three constraints",
+  interactiveSplitBefore: "Product strategy",
   chapters: [
     { id: "overview",   label: "Overview",   blockLabel: "Overview" },
-    { id: "challenge",  label: "Challenge",  blockLabel: "The challenge" },
+    { id: "challenge",  label: "Challenges", blockLabel: "Challenges" },
     { id: "strategy",   label: "Strategy",   blockLabel: "Product strategy" },
-    { id: "research",   label: "Research",   blockLabel: "Framing the problem" },
+    { id: "research",   label: "Research",   blockLabel: "Learning from the market" },
     { id: "design",     label: "Design",     blockLabel: "Defining the experience" },
     { id: "testing",    label: "Testing",    blockLabel: "Validating assumptions" },
     { id: "impact",     label: "Impact",     blockLabel: "Business impact" },
     { id: "reflection", label: "Reflection", blockLabel: "_reflection" },
   ],
   reflection: {
-    heading: "Great product design aligns people around the right problem",
+    heading: "Aligning people around the right problem is great product design",
     body: [
-      "Making Tax Digital challenged me to think beyond interface design. Because the future workflow didn't yet exist, success depended on combining user research, domain expertise, strategic thinking and close collaboration to anticipate problems before customers experienced them. Looking back, one of the things I'm most proud of wasn't the interface itself — it was using Design to create a shared understanding of the problem across Product, Engineering and the wider business.",
-      "Three lessons stayed with me: alignment is often more valuable than speed; evidence transforms stakeholder conversations from subjective opinion into evidence-based decision-making; and in products where error carries real consequences, prioritise error reduction over elegance.",
-      "Great product design isn't measured by the number of screens produced. It's measured by how effectively it helps teams make better decisions and enables customers to achieve their goals with confidence.",
+      "Success depended on combining user research, domain expertise, strategic thinking and close collaboration to anticipate problems before customers experienced them. Making Tax Digital made me think beyond interface design because the future workflow didn't yet exist. The thing within this piece of work that I am most proud of is using Design to create a shared understanding of the problem across Product, Engineering and the wider business.",
+      "Three important learnings stand out from this project.",
+      "1) Evidence transforms stakeholder conversations from subjective opinion into evidence-based decision-making.",
+      "2) In products where error carries real consequences, prioritise error reduction over elegance.",
+      "3) Alignment is often more valuable than speed.",
     ],
   },
 };

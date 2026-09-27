@@ -47,17 +47,35 @@ function Figure({
   sizes?: string;
   priority?: boolean;
 }) {
+  const image = (
+    <AssetImage
+      src={figure.src}
+      alt={figure.alt}
+      dims={figure.dims}
+      sizes={
+        figure.mobileScroll
+          ? "(min-width: 1024px) 60rem, (min-width: 640px) 100vw, 64rem"
+          : sizes
+      }
+      priority={priority || figure.priority}
+    />
+  );
   return (
-    <figure>
-      <div className="overflow-hidden border border-rule bg-paper-raised">
-        <AssetImage
-          src={figure.src}
-          alt={figure.alt}
-          dims={figure.dims}
-          sizes={sizes}
-          priority={priority || figure.priority}
-        />
-      </div>
+    // min-w-0 lets the grid item shrink so the inner scroller, not the page, overflows.
+    <figure className={figure.mobileScroll ? "min-w-0" : undefined}>
+      {figure.mobileScroll ? (
+        // Swipeable on phones; from `sm` up it behaves like any other frame.
+        <div
+          role="region"
+          aria-label="Scrollable image"
+          tabIndex={0}
+          className="overflow-x-auto border border-rule bg-paper-raised sm:overflow-hidden"
+        >
+          <div className="min-w-[64rem] sm:min-w-0">{image}</div>
+        </div>
+      ) : (
+        <div className="overflow-hidden border border-rule bg-paper-raised">{image}</div>
+      )}
       {figure.caption ? <Caption>{figure.caption}</Caption> : null}
     </figure>
   );
@@ -272,6 +290,27 @@ export function CaseBlock({ block }: { block: Block }) {
                 </div>
                 {single.caption ? <Caption>{single.caption}</Caption> : null}
               </figure>
+            </Container>
+          </>
+        );
+      }
+
+      // Like-for-like comparison — two artefacts at equal scale, side by side
+      // only once each has room to keep its interface detail legible.
+      if (block.layout === "compare") {
+        return (
+          <>
+            {Intro}
+            <Container size="wide" className={`${intro ? "mt-8" : ""} chapter-rail-media`}>
+              <div className="grid gap-x-6 gap-y-10 xl:grid-cols-2 xl:items-start">
+                {block.figures.map((figure, i) => (
+                  <Figure
+                    key={i}
+                    figure={figure}
+                    sizes="(min-width: 1280px) 46rem, 100vw"
+                  />
+                ))}
+              </div>
             </Container>
           </>
         );
