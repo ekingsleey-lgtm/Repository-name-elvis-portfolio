@@ -32,6 +32,11 @@ export type Figure = {
    * short artefacts whose labels become illegible at phone width.
    */
   mobileScroll?: boolean;
+  /**
+   * Overrides the responsive `sizes` hint when a figure renders wider than
+   * the block's default assumes, so the browser fetches enough pixels.
+   */
+  sizes?: string;
 };
 
 export type Block =
@@ -53,9 +58,9 @@ export type Block =
       body?: string[];
       figures: Figure[];
       /**
-       * "compare" lays two figures out as a like-for-like comparison on the
-       * wide container: side by side from `xl`, stacked below it, each keeping
-       * its full frame and caption so the pairing reads at every width.
+       * "compare" lays figures out as a like-for-like comparison on the wide
+       * container, stacked one above the other at every width, each keeping
+       * its full frame and caption.
        */
       layout?: "compare";
     }
@@ -166,8 +171,8 @@ export type Block =
       type: "figmaEmbed";
       label?: string;
       heading?: string;
-      /** Single paragraph of supporting copy shown above the embed. */
-      body?: string;
+      /** Supporting paragraphs shown above the embed. */
+      body?: string[];
       /** The Figma proto URL used as the iframe src (clean, with hide-ui=1). */
       embedUrl: string;
       /** Original Figma share URL — used for the fallback open-in-Figma link. */

@@ -53,9 +53,10 @@ function Figure({
       alt={figure.alt}
       dims={figure.dims}
       sizes={
-        figure.mobileScroll
+        figure.sizes ??
+        (figure.mobileScroll
           ? "(min-width: 1024px) 60rem, (min-width: 640px) 100vw, 64rem"
-          : sizes
+          : sizes)
       }
       priority={priority || figure.priority}
     />
@@ -295,19 +296,19 @@ export function CaseBlock({ block }: { block: Block }) {
         );
       }
 
-      // Like-for-like comparison — two artefacts at equal scale, side by side
-      // only once each has room to keep its interface detail legible.
+      // Like-for-like comparison — artefacts at equal scale, stacked so each
+      // keeps the full width its interface detail needs.
       if (block.layout === "compare") {
         return (
           <>
             {Intro}
             <Container size="wide" className={`${intro ? "mt-8" : ""} chapter-rail-media`}>
-              <div className="grid gap-x-6 gap-y-10 xl:grid-cols-2 xl:items-start">
+              <div className="grid gap-y-10">
                 {block.figures.map((figure, i) => (
                   <Figure
                     key={i}
                     figure={figure}
-                    sizes="(min-width: 1280px) 46rem, 100vw"
+                    sizes="(min-width: 1024px) 82rem, 100vw"
                   />
                 ))}
               </div>
@@ -614,9 +615,11 @@ export function CaseBlock({ block }: { block: Block }) {
         <>
           <Container>
             <Section label={block.label} heading={block.heading}>
-              {block.body ? (
-                <p className="leading-relaxed text-ink-soft">{block.body}</p>
-              ) : null}
+              {block.body?.map((paragraph, i) => (
+                <p key={i} className={`leading-relaxed text-ink-soft${i ? " mt-4" : ""}`}>
+                  {paragraph}
+                </p>
+              ))}
             </Section>
           </Container>
           <Container className="mt-8">

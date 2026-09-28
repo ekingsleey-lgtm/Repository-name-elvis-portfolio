@@ -45,7 +45,7 @@ export const kfc: CaseStudy = {
       label: "Overview",
       heading: "Evolving loyalty beyond the transaction",
       body: [
-        "KFC wanted customers to have more reasons to return to its app and use its rewards programme. The Rewards Arcade gave them a chance to win prizes. My part of the work was Reward Sharing: letting a customer give a reward to a friend or family member, including someone who had not joined KFC Rewards yet.",
+        "Data showed that KFC customers weren't using rewards often, indicating they needed more reasons to return to the app and use the rewards programme. The new Rewards Arcade gave them a chance to win prizes. My part of the process was the reward functionality and presentation from when a customer won a new reward. I explored how letting a customer gift a reward to a friend or family member could help KFC reach its goal.",
       ],
     },
     {
@@ -55,6 +55,15 @@ export const kfc: CaseStudy = {
       body: [
         "Most loyalty journeys end with the person who earned the reward. They buy something, collect a reward and redeem it later.",
         "KFC wanted to increase engagement among existing customers and bring new people into the programme.",
+      ],
+    },
+    {
+      type: "list",
+      heading: "One feature, a connected loyalty system",
+      style: "bullet",
+      items: [
+        "Antavo powered reward management. Its rules affected whether a reward could be shared, who owned it afterward, how a coupon worked and how it would be redeemed. I worked through those constraints early so the journey we designed could actually be built.",
+        "RAPP led the wider Rewards Arcade campaign. Reward Sharing needed to make sense alongside that work and feel consistent wherever a customer entered the journey, including outside the app.",
       ],
     },
     {
@@ -82,15 +91,6 @@ export const kfc: CaseStudy = {
         ["Customer needs", "Rewards that felt valuable, clear and simple to redeem"],
         ["Business goals", "More engagement and new customer acquisition"],
         ["Technical reality", "An experience Antavo could support within the timeline"],
-      ],
-    },
-    {
-      type: "prose",
-      label: "The wider ecosystem",
-      heading: "One feature, a connected loyalty system",
-      body: [
-        "Antavo powered reward management. Its rules affected whether a reward could be shared, who owned it afterward, how a coupon worked and how it would be redeemed. I worked through those constraints early so the journey we designed could actually be built.",
-        "RAPP led the wider Rewards Arcade campaign. Reward Sharing needed to make sense alongside that work and feel consistent wherever a customer entered the journey, including outside the app.",
       ],
     },
     {
@@ -170,6 +170,18 @@ export const kfc: CaseStudy = {
       body: [
         "I reviewed loyalty experiences including Costa Coffee and McDonald’s to see how they handled sharing and engagement. Sharing existed in some programmes, but I did not find it widely used across the quick-service products I reviewed.",
         "That gave us a useful starting point. We could look at sharing patterns customers might already recognise, while working out how those patterns would fit KFC’s rewards and Antavo’s rules. I brought those examples into early conversations with Product and Engineering about the interaction and its likely complexity.",
+      ],
+    },
+    {
+      type: "figures",
+      figures: [
+        {
+          src: "/work/kfc/costa-competitor.webp",
+          caption: "Costa Coffee competitor analysis",
+          alt: "Five Costa Coffee app screens: a two-step onboarding explaining how to gift a reward to a friend, the app home screen, a ten-stamp coffee card, and an About rewards page covering how to claim and how to gift rewards",
+          width: "full",
+          dims: { w: 2950, h: 1020 },
+        },
       ],
     },
     {
@@ -313,7 +325,11 @@ export const kfc: CaseStudy = {
       type: "figmaEmbed",
       label: "Reusable pattern",
       heading: "A pattern designed to teach, then disappear",
-      body: "I designed the explainer as a pattern that could be reused when KFC introduced an unfamiliar experience. I added the new elements to the Figma design system after validation. The question in testing was how much explanation customers actually needed before using the Arcade and sharing a reward.",
+      body: [
+        "I had recently worked on a feature at KFC that increased calls to Customer Service. Customers were not expecting the feature or did not know how to use it. As a result of this, I designed the explainer as a pattern that could be reused when KFC introduced an unfamiliar experience.",
+        "As the project was moving towards the RAPP marketing release deadline, I did not have time to do an in-depth user testing session but still felt it was important to get user input so I did guerrilla testing with people on the street.",
+        "The question in testing was how much explanation customers actually needed before using the Arcade and sharing a reward to understand it and feel confident using it.",
+      ],
       embedUrl:
         "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FLM6oYL0en38Kvzl877kub0%2FReward-sharing-KFC%3Fnode-id%3D1603-9700%26scaling%3Dmin-zoom%26content-scaling%3Dfixed%26starting-point-node-id%3D1603%253A9700%26page-id%3D1120%253A9594%26hide-ui%3D1",
       fallbackUrl:
@@ -327,12 +343,8 @@ export const kfc: CaseStudy = {
       body: [
         "I ran guerrilla usability testing, paying particular attention to the instructional carousel. Participants swiped through it without spending much time on the supporting copy.",
         "That changed my approach. The interface was already giving them enough direction, so I removed the extra instruction. It left customers with less to read before they could get on with the experience.",
+        "After participants' suggestions, I also removed arrow icons next to the carousel circles. This gave the screen a cleaner look and gave components more white space to breathe.",
       ],
-    },
-    {
-      type: "statement",
-      label: "The principle",
-      body: "The testing reminded me to look at what people do with the interface. In this case, more instructions were not helping them move forward.",
     },
     {
       type: "prose",
