@@ -166,14 +166,34 @@ export const dext: CaseStudy = {
       ],
     },
     {
-      type: "statement",
+      type: "prose",
       label: "The insight",
-      body: "Accountants think about multiple client types at a time",
+      heading: "Accountants think about multiple client types at a time",
+      body: [
+        "Separate user interviews with accountants gave us insight into their workflow. Accountants switch between reviewing their workload, identifying high-risk clients and drilling into individual cases that constantly require attention. The dashboard needed to support all of these switches in workflow without unnecessary complexity.",
+      ],
     },
     {
       type: "prose",
+      label: "User flow",
+      heading: "Exploring the overdue client flow",
       body: [
-        "Separate user interviews with accountants gave us insight into their workflow. Accountants switch between reviewing their workload, identifying high-risk clients and drilling into individual cases that constantly require attention. The dashboard needed to support all of these switches in workflow without unnecessary complexity.",
+        "The next thing to do was explore user flows. Understanding the accountant's mental model helped me view the product from their perspective. The flow that I wanted to explore the most was the overdue client flow, as this was the flow that would be the highest risk and easiest to make human errors on.",
+      ],
+    },
+    {
+      type: "figures",
+      figures: [
+        {
+          src: "/work/dext/quarterly-submission-user-flow.webp",
+          alt: "Accountant and bookkeeper user flow from identifying an overdue client obligation in the Dext MTD dashboard through review and submission.",
+          caption:
+            "Exploring how an accountant identifies an overdue obligation, reviews the client’s records and completes the submission.",
+          width: "bleed",
+          dims: { w: 2172, h: 724 },
+          mobileScroll: true,
+          sizes: "(min-width: 1024px) 82rem, (min-width: 640px) 100vw, 64rem",
+        },
       ],
     },
     {
